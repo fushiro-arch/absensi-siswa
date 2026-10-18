@@ -2,304 +2,345 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#5b35d5">
-<title>Absensi Siswa • HadirYuk</title>
-<style>
-:root{--purple:#5b35d5;--dark:#3d20a8;--pink:#ff4fa3;--ink:#20183b;--muted:#766e8d;--line:#e9e4f6}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(circle at 8% 4%,#ffdbef,transparent 28rem),radial-gradient(circle at 95% 16%,#c9fbf6,transparent 25rem),linear-gradient(135deg,#f7f4ff,#fff8fc 55%,#f1fffd)}
-.wrap{width:min(980px,calc(100% - 28px));margin:auto;padding:28px 0 40px}
-header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px}
-.brand{display:flex;align-items:center;gap:11px;font-weight:900;font-size:1.1rem}
-.logo{width:44px;height:44px;display:grid;place-items:center;border-radius:15px;color:white;font-size:23px;background:linear-gradient(135deg,var(--purple),var(--pink))}
-.pill{border:1px solid #dcd3f8;background:#fff9;padding:9px 13px;border-radius:999px;color:var(--dark);font-size:.8rem;font-weight:800}
-.hero{border-radius:28px;color:white;padding:clamp(24px,5vw,42px);background:linear-gradient(120deg,#4321b7,#7048e8 58%,#f04d9d);box-shadow:0 20px 50px #5634c42b}
-.eyebrow{font-size:.77rem;letter-spacing:2px;font-weight:900;color:#d9fff9}
-h1{margin:10px 0;font-size:clamp(2rem,6vw,3.4rem);line-height:1.04;letter-spacing:-1.5px}
-.hero p{line-height:1.65;color:#f4efff}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0 22px}
-.stat,.panel{background:#fff;border:1px solid #ece7f8;border-radius:20px;padding:17px;box-shadow:0 10px 30px #35205b0a}
-.stat span{display:block;color:var(--muted);font-size:.8rem;margin-bottom:6px}
-.stat strong{font-size:clamp(.95rem,3vw,1.25rem)}
-.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.8fr);gap:18px;align-items:start}
-.panel{border-radius:24px;padding:clamp(18px,3vw,26px)}
-h2{margin:0 0 8px;font-size:1.2rem}
-.sub{color:var(--muted);font-size:.9rem;line-height:1.5;margin:0 0 20px}
-.field-label{display:block;font-size:.88rem;font-weight:800;margin:17px 0 8px}
-input[type=text],input[type=file]{width:100%;border:1.5px solid var(--line);border-radius:13px;padding:13px;font:inherit;background:#fcfbff}
-input[type=file]{font-size:.82rem}
-.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.choice{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);padding:13px;border-radius:14px;cursor:pointer;font-weight:800;font-size:.9rem}
-.choice:has(input:checked){border-color:var(--purple);background:#f4f0ff;color:var(--dark)}
-.choice input{accent-color:var(--purple);width:18px;height:18px}
-.hint,.privacy{color:var(--muted);font-size:.79rem;line-height:1.5;margin-top:10px}
-.submit{margin-top:22px;width:100%;border:0;border-radius:14px;padding:15px;color:white;background:linear-gradient(100deg,var(--purple),#8c42df 60%,var(--pink));font:inherit;font-weight:850;cursor:pointer}
-.submit:disabled{opacity:.65;cursor:wait}
-.notice{display:none;margin-top:13px;padding:12px 14px;border-radius:12px;font-size:.88rem;line-height:1.5}
-.notice.show{display:block}.notice.good{background:#e7fbf3;color:#116b4d}.notice.bad{background:#fff0f2;color:#a1263e}
-.list-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:13px}
-.count{background:#f0ebff;color:var(--dark);font-weight:900;padding:6px 10px;border-radius:99px;font-size:.8rem}
-.entries{display:grid;gap:10px}
-.entry{border:1px solid var(--line);border-radius:15px;padding:13px;display:grid;grid-template-columns:39px 1fr;gap:10px;align-items:center}
-.avatar{display:grid;place-items:center;width:39px;height:39px;border-radius:13px;background:linear-gradient(135deg,#e8e1ff,#ffe0f0);color:var(--dark);font-weight:900}
-.entry strong{display:block;overflow-wrap:anywhere;font-size:.92rem}
-.entry small{display:block;color:var(--muted);margin-top:4px;line-height:1.45}
-.empty{padding:26px 10px;text-align:center;color:var(--muted);font-size:.9rem;border:1px dashed #dcd3f1;border-radius:15px}
-.foot{text-align:center;color:var(--muted);font-size:.8rem;margin-top:22px;line-height:1.6}
-@media(max-width:720px){.layout{grid-template-columns:1fr}header{align-items:flex-start}.pill{font-size:.7rem}.stats{gap:8px}.stat{padding:12px}}
-@media(max-width:390px){.choices{grid-template-columns:1fr}.brand{font-size:.95rem}}
-</style>
-</head>
-<body>
-<main class="wrap">
-<header>
-  <div class="brand"><div class="logo">✓</div><span>HadirYuk<span style="color:#f04d9d">.</span></span></div>
-  <div class="pill">● ABSENSI SISWA</div>
-</header>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Absensi Kelas 9E - HadirYuk</title>
 
-<section class="hero">
-  <div class="eyebrow">HALO, SISWA HEBAT! ✨</div>
-  <h1>Absen dulu,<br>baru gas belajar.</h1>
-  <p>Isi nama, pilih status kehadiran, izinkan lokasi, dan ambil dua foto sebagai bukti absensi.</p>
-</section>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-<section class="stats">
-  <div class="stat"><span>📅 Tanggal hari ini</span><strong id="today">—</strong></div>
-  <div class="stat"><span>🕒 Waktu WIB</span><strong id="clock">—</strong></div>
-  <div class="stat"><span>🙋 Tercatat di perangkat ini</span><strong id="total">0 siswa</strong></div>
-</section>
+  <style>
+    * { box-sizing: border-box; }
 
-<div class="layout">
-<section class="panel">
-  <h2>Form absensi 📝</h2>
-  <p class="sub">Waktu tercatat otomatis mengikuti zona waktu WIB (Asia/Jakarta).</p>
-  <form id="attendanceForm">
-    <label class="field-label" for="studentName">Nama lengkap</label>
-    <input id="studentName" type="text" placeholder="Contoh: Siti Nurhaliza" maxlength="80" autocomplete="name" required>
-
-    <label class="field-label">Status kehadiran</label>
-    <div class="choices">
-      <label class="choice"><input type="radio" name="status" value="Hadir" checked required> ✅ Hadir</label>
-      <label class="choice"><input type="radio" name="status" value="Izin"> 📨 Izin</label>
-      <label class="choice"><input type="radio" name="status" value="Sakit"> 🤒 Sakit</label>
-      <label class="choice"><input type="radio" name="status" value="Alpa"> ❌ Alpa</label>
-    </div>
-
-    <label class="field-label">📍 Izin lokasi GPS</label>
-    <label class="choice"><input id="locationConsent" type="checkbox" required> Saya setuju membagikan lokasi untuk absensi</label>
-
-    <label class="field-label" for="fotoDepan">📸 Foto depan / selfie</label>
-    <input id="fotoDepan" type="file" accept="image/*" capture="user" required>
-
-    <label class="field-label" for="fotoBelakang">📷 Foto belakang</label>
-    <input id="fotoBelakang" type="file" accept="image/*" capture="environment" required>
-
-    <p class="hint">Foto dan lokasi dikirim ke email penerima absensi. Tautan foto tidak ditampilkan di website.</p>
-    <button class="submit" type="submit">Kirim Absensi →</button>
-    <div id="notice" class="notice" role="status" aria-live="polite"></div>
-  </form>
-  <p class="privacy">Riwayat di samping disimpan lokal pada browser ini. Daftar tidak otomatis dibagikan ke semua perangkat.</p>
-</section>
-
-<section class="panel">
-  <div class="list-head"><h2>Kiriman terbaru 📋</h2><span class="count" id="countBadge">0</span></div>
-  <p class="sub">Daftar lokal pada perangkat ini, urut dari yang terbaru.</p>
-  <div id="entries" class="entries"><div class="empty">Belum ada absensi.<br>Jadilah yang pertama!</div></div>
-</section>
-</div>
-<footer class="foot">HadirYuk © <span id="year"></span> · Dibuat untuk membantu kelas lebih tertib 💜<br>Jam menggunakan zona waktu WIB (UTC+7).</footer>
-</main>
-
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-const $ = id => document.getElementById(id);
-
-// EmailJS
-const EMAILJS_PUBLIC_KEY = "A607Op6M2VN9lRsLi";
-const EMAILJS_SERVICE_ID = "service_82qgoat";
-const EMAILJS_TEMPLATE_ID = "template_u6zcwpy";
-if (window.emailjs) emailjs.init({publicKey: EMAILJS_PUBLIC_KEY});
-
-// Cloudinary
-const CLOUDINARY_CLOUD_NAME = "qna1hjte";
-const CLOUDINARY_UPLOAD_PRESET = "absensi_upload";
-
-const storageKey = "hadiryuk_absensi_v1";
-const dateFormatter = new Intl.DateTimeFormat("id-ID", {
-  timeZone:"Asia/Jakarta", weekday:"long", day:"numeric", month:"long", year:"numeric"
-});
-const timeFormatter = new Intl.DateTimeFormat("id-ID", {
-  timeZone:"Asia/Jakarta", hour:"2-digit", minute:"2-digit", second:"2-digit", hour12:false
-});
-const stampFormatter = new Intl.DateTimeFormat("id-ID", {
-  timeZone:"Asia/Jakarta", day:"2-digit", month:"short", year:"numeric",
-  hour:"2-digit", minute:"2-digit", second:"2-digit", hour12:false
-});
-
-function updateDateTime(){
-  const now = new Date();
-  $("today").textContent = dateFormatter.format(now);
-  $("clock").textContent = timeFormatter.format(now) + " WIB";
-  $("year").textContent = new Intl.DateTimeFormat("id-ID", {
-    timeZone:"Asia/Jakarta", year:"numeric"
-  }).format(now);
-}
-function loadEntries(){
-  try {
-    const data = JSON.parse(localStorage.getItem(storageKey) || "[]");
-    return Array.isArray(data) ? data : [];
-  } catch (_) { return []; }
-}
-function renderEntries(){
-  const entries = loadEntries();
-  $("total").textContent = entries.length + " siswa";
-  $("countBadge").textContent = entries.length;
-  const root = $("entries");
-  root.replaceChildren();
-  if (!entries.length) {
-    const empty = document.createElement("div");
-    empty.className = "empty";
-    empty.textContent = "Belum ada absensi.";
-    root.appendChild(empty);
-    return;
-  }
-  entries.slice(0,30).forEach(item => {
-    const card = document.createElement("article");
-    card.className = "entry";
-    const avatar = document.createElement("div");
-    avatar.className = "avatar";
-    avatar.textContent = (item.name || "?").trim().charAt(0).toUpperCase();
-    const info = document.createElement("div");
-    const name = document.createElement("strong");
-    name.textContent = item.name;
-    const detail = document.createElement("small");
-    detail.textContent = item.status + " · " + item.time + " WIB";
-    info.append(name,detail);
-    card.append(avatar,info);
-    root.appendChild(card);
-  });
-}
-
-function getDeviceLocation(){
-  return new Promise((resolve,reject)=>{
-    if (!navigator.geolocation) {
-      reject(new Error("Browser tidak mendukung GPS."));
-      return;
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding: 24px 14px;
+      font-family: Arial, sans-serif;
+      color: #35264d;
+      background: linear-gradient(135deg, #f5e9ff, #ffeaf3, #e9f3ff);
     }
-    navigator.geolocation.getCurrentPosition(
-      position => resolve(position.coords),
-      () => reject(new Error("Lokasi gagal didapat. Aktifkan GPS dan izinkan akses lokasi, lalu coba lagi.")),
-      {enableHighAccuracy:true,timeout:20000,maximumAge:0}
-    );
-  });
-}
 
-async function uploadFoto(file){
-  const data = new FormData();
-  data.append("file",file);
-  data.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);
-  const response = await fetch(
-    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
-    {method:"POST",body:data}
-  );
-  const result = await response.json();
-  if (!response.ok || !result.secure_url) {
-    throw new Error("Upload foto gagal. Periksa upload preset Cloudinary.");
-  }
-  return result.secure_url;
-}
+    .container { max-width: 620px; margin: auto; }
 
-$("attendanceForm").addEventListener("submit",async event=>{
-  event.preventDefault();
-  const name = $("studentName").value.trim().replace(/\s+/g," ");
-  const status = document.querySelector('input[name="status"]:checked')?.value;
-  const depan = $("fotoDepan").files[0];
-  const belakang = $("fotoBelakang").files[0];
-  const notice = $("notice");
-  const button = $("attendanceForm").querySelector('button[type="submit"]');
+    .hero, .form-card {
+      background: rgba(255,255,255,.92);
+      border: 1px solid #ffffff;
+      border-radius: 22px;
+      padding: 24px;
+      margin-bottom: 18px;
+      box-shadow: 0 12px 35px rgba(95,65,125,.12);
+    }
 
-  if (!name || !status || !$("locationConsent").checked || !depan || !belakang) {
-    notice.className = "notice show bad";
-    notice.textContent = "Lengkapi nama, status, persetujuan GPS, dan kedua foto.";
-    return;
-  }
-  if (!window.emailjs) {
-    notice.className = "notice show bad";
-    notice.textContent = "EmailJS belum termuat. Periksa koneksi internet.";
-    return;
-  }
+    .hero { text-align: center; }
 
-  const now = new Date();
-  const entries = loadEntries();
-  const todayKey = new Intl.DateTimeFormat("en-CA",{
-    timeZone:"Asia/Jakarta",year:"numeric",month:"2-digit",day:"2-digit"
-  }).format(now);
+    .logo {
+      display: inline-block;
+      padding: 9px 15px;
+      background: #f0e2ff;
+      color: #7546a8;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: bold;
+    }
 
-  if (entries.some(item=>item.dayKey===todayKey &&
-    item.name.toLocaleLowerCase("id-ID")===name.toLocaleLowerCase("id-ID"))) {
-    notice.className = "notice show bad";
-    notice.textContent = "Nama ini sudah mengirim absensi hari ini di browser ini.";
-    return;
-  }
+    h1 { margin: 15px 0 8px; font-size: 28px; }
+    .subtitle { color: #766887; line-height: 1.6; font-size: 14px; }
 
-  button.disabled = true;
-  button.textContent = "Memproses...";
-  try {
-    notice.className = "notice show";
-    notice.textContent = "Mengambil lokasi GPS... Izinkan akses saat browser bertanya.";
-    const coords = await getDeviceLocation();
-    const mapsLink = `https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`;
+    label {
+      display: block;
+      margin: 17px 0 8px;
+      font-size: 14px;
+      font-weight: bold;
+    }
 
-    notice.textContent = "Mengunggah kedua foto...";
-    const [fotoDepanUrl,fotoBelakangUrl] = await Promise.all([
-      uploadFoto(depan), uploadFoto(belakang)
-    ]);
+    input, select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #e3d8ee;
+      border-radius: 12px;
+      background: #fff;
+      color: #35264d;
+      font-size: 15px;
+      outline: none;
+    }
 
-    const formattedDate = dateFormatter.format(now);
-    const formattedTime = stampFormatter.format(now);
+    input:focus, select:focus { border-color: #a77bdd; }
 
-    notice.textContent = "Mengirim absensi ke Gmail...";
-    await emailjs.send(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,{
-      nama:name,
-      status:status,
-      tanggal:formattedDate,
-      waktu:formattedTime,
-      lokasi:`${coords.latitude}, ${coords.longitude}`,
-      link_lokasi:mapsLink,
-      latitude:coords.latitude,
-      longitude:coords.longitude,
-      akurasi_lokasi:Math.round(coords.accuracy)+" meter",
-      foto_depan:fotoDepanUrl,
-      foto_belakang:fotoBelakangUrl,
-      title:"Absensi Siswa - "+name+" - "+formattedDate,
-      name:name
+    button {
+      width: 100%;
+      border: 0;
+      padding: 15px;
+      margin-top: 22px;
+      border-radius: 13px;
+      background: linear-gradient(100deg, #9c68d7, #e17bb0);
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:disabled { opacity: .6; cursor: wait; }
+
+    .warning {
+      text-align: center;
+      color: #b53d61;
+      font-size: 12px;
+      margin-top: 12px;
+      font-weight: bold;
+    }
+
+    .status {
+      display: none;
+      padding: 13px;
+      border-radius: 12px;
+      margin-top: 16px;
+      font-size: 14px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+
+    .status.show { display: block; }
+    .status.info { background: #f0e9ff; color: #6941a0; }
+    .status.success { background: #e5f8eb; color: #236c3b; }
+    .status.error { background: #ffebee; color: #a32d42; }
+
+    footer {
+      text-align: center;
+      color: #8b7b9a;
+      font-size: 12px;
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <section class="hero">
+      <div class="logo">✨ HadirYuk</div>
+      <h1>Absensi Kelas 9E</h1>
+      <p class="subtitle">
+        Selamat datang di halaman absensi kelas 9E.
+        Isi data dengan benar dan kirim absensi untuk mencatat kehadiran.
+      </p>
+    </section>
+
+    <section class="form-card">
+      <form id="attendanceForm">
+        <label for="nama">Nama lengkap</label>
+        <input
+          id="nama"
+          name="nama"
+          type="text"
+          placeholder="Masukkan nama lengkap"
+          maxlength="100"
+          required
+        >
+
+        <label for="status">Status kehadiran</label>
+        <select id="status" name="status" required>
+          <option value="">Pilih status kehadiran</option>
+          <option value="Hadir">Hadir</option>
+          <option value="Izin">Izin</option>
+          <option value="Sakit">Sakit</option>
+        </select>
+
+        <button id="submitButton" type="submit">📨 Kirim Absensi</button>
+        <p class="warning">Jika tidak ada absensi maka dinyatakan alpha!</p>
+        <div id="message" class="status" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+
+    <footer>HadirYuk · Absensi Kelas 9E</footer>
+  </main>
+
+  <script>
+    // Konfigurasi EmailJS
+    const EMAILJS_PUBLIC_KEY = "A607Op6M2VN9lRsLi";
+    const EMAILJS_SERVICE_ID = "service_82qgoat";
+    const EMAILJS_TEMPLATE_ID = "template_u6zcwpy";
+
+    // Konfigurasi Cloudinary
+    const CLOUDINARY_CLOUD_NAME = "qna1hjte";
+    const CLOUDINARY_UPLOAD_PRESET = "absensi_upload";
+
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+
+    const form = document.getElementById("attendanceForm");
+    const button = document.getElementById("submitButton");
+    const message = document.getElementById("message");
+
+    function showMessage(text, type) {
+      message.textContent = text;
+      message.className = "status show " + type;
+    }
+
+    function getLocation() {
+      return new Promise((resolve, reject) => {
+        if (!navigator.geolocation) {
+          reject(new Error("Browser tidak mendukung GPS."));
+          return;
+        }
+
+        navigator.geolocation.getCurrentPosition(
+          position => resolve({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude
+          }),
+          error => {
+            const errors = {
+              1: "Izin lokasi ditolak. Absensi dibatalkan.",
+              2: "Lokasi tidak tersedia. Coba lagi.",
+              3: "GPS terlalu lama merespons. Coba lagi."
+            };
+            reject(new Error(errors[error.code] || "Gagal mendapatkan lokasi."));
+          },
+          { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
+        );
+      });
+    }
+
+    async function capturePhoto(facingMode) {
+      if (!navigator.mediaDevices?.getUserMedia) {
+        throw new Error("Kamera tidak didukung. Buka situs melalui HTTPS dan browser yang terbaru.");
+      }
+
+      let stream;
+
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          audio: false,
+          video: {
+            facingMode: { ideal: facingMode },
+            width: { ideal: 1280 },
+            height: { ideal: 720 }
+          }
+        });
+
+        const video = document.createElement("video");
+        video.autoplay = true;
+        video.muted = true;
+        video.playsInline = true;
+        video.srcObject = stream;
+
+        await new Promise((resolve, reject) => {
+          video.onloadedmetadata = resolve;
+          video.onerror = () => reject(new Error("Kamera gagal dibuka."));
+          setTimeout(() => reject(new Error("Kamera terlalu lama merespons.")), 12000);
+        });
+
+        await video.play();
+
+        if (!video.videoWidth || !video.videoHeight) {
+          throw new Error("Gambar kamera tidak tersedia.");
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext("2d").drawImage(video, 0, 0);
+
+        return await new Promise((resolve, reject) => {
+          canvas.toBlob(blob => {
+            if (blob) resolve(blob);
+            else reject(new Error("Gagal mengambil foto."));
+          }, "image/jpeg", 0.82);
+        });
+      } finally {
+        if (stream) stream.getTracks().forEach(track => track.stop());
+      }
+    }
+
+    async function uploadPhoto(blob, label) {
+      const data = new FormData();
+      data.append("file", blob, label + ".jpg");
+      data.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+        { method: "POST", body: data }
+      );
+
+      const result = await response.json();
+
+      if (!response.ok || !result.secure_url) {
+        throw new Error("Upload foto " + label + " gagal. Periksa konfigurasi Cloudinary.");
+      }
+
+      return result.secure_url;
+    }
+
+    form.addEventListener("submit", async event => {
+      event.preventDefault();
+
+      if (button.disabled) return;
+
+      const nama = document.getElementById("nama").value.trim();
+      const status = document.getElementById("status").value;
+
+      if (!nama || !status) {
+        showMessage("Isi nama dan status kehadiran terlebih dahulu.", "error");
+        return;
+      }
+
+      if (!window.isSecureContext) {
+        showMessage("Buka website melalui HTTPS agar GPS dan kamera dapat digunakan.", "error");
+        return;
+      }
+
+      button.disabled = true;
+
+      try {
+        showMessage("Meminta izin lokasi GPS...", "info");
+        const location = await getLocation();
+
+        showMessage("Meminta izin kamera depan...", "info");
+        const frontPhoto = await capturePhoto("user");
+
+        showMessage("Meminta izin kamera belakang...", "info");
+        const backPhoto = await capturePhoto("environment");
+
+        showMessage("Mengunggah foto absensi...", "info");
+        const [fotoDepan, fotoBelakang] = await Promise.all([
+          uploadPhoto(frontPhoto, "depan"),
+          uploadPhoto(backPhoto, "belakang")
+        ]);
+
+        const now = new Date();
+        const tanggal = now.toLocaleDateString("id-ID", {
+          day: "2-digit", month: "long", year: "numeric"
+        });
+        const waktu = now.toLocaleTimeString("id-ID", {
+          hour: "2-digit", minute: "2-digit", second: "2-digit"
+        });
+
+        const linkLokasi =
+          `https://www.google.com/maps?q=${location.latitude},${location.longitude}`;
+
+        showMessage("Mengirim data absensi ke email...", "info");
+
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          nama: nama,
+          status: status,
+          tanggal: tanggal,
+          waktu: waktu,
+          lokasi: `${location.latitude}, ${location.longitude}`,
+          link_lokasi: linkLokasi,
+          foto_depan: fotoDepan,
+          foto_belakang: fotoBelakang
+        });
+
+        showMessage("Absensi berhasil dikirim!", "success");
+        form.reset();
+      } catch (error) {
+        console.error("Absensi gagal:", error);
+        showMessage(
+          error.message || "Absensi gagal dikirim. Periksa koneksi dan konfigurasi.",
+          "error"
+        );
+      } finally {
+        button.disabled = false;
+      }
     });
-
-    entries.unshift({name,status,dayKey:todayKey,time:formattedTime});
-    localStorage.setItem(storageKey,JSON.stringify(entries));
-    renderEntries();
-
-    notice.className = "notice show good";
-    notice.textContent = "Absensi berhasil dikirim ke email pada "+formattedTime+" WIB. Terima kasih, "+name+"!";
-    $("studentName").value = "";
-    $("fotoDepan").value = "";
-    $("fotoBelakang").value = "";
-    $("locationConsent").checked = false;
-  } catch (error) {
-    console.error(error);
-    notice.className = "notice show bad";
-    notice.textContent = error.message || "Gagal mengirim absensi. Periksa koneksi dan pengaturan layanan.";
-  } finally {
-    button.disabled = false;
-    button.textContent = "Kirim Absensi →";
-  }
-});
-
-updateDateTime();
-renderEntries();
-setInterval(updateDateTime,1000);
-</script>
+  </script>
 </body>
 </html>
