@@ -2,635 +2,358 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#9b6be8">
-  <title>Absensi Kelas 9E | HadirYuk</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-  <style>
-    :root {
-      --purple: #8954d8;
-      --purple-dark: #6338a6;
-      --pink: #ed80b6;
-      --text: #332448;
-      --muted: #8d819b;
-      --line: #eee5f5;
-      --surface: #ffffff;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      min-height: 100vh;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
-      color: var(--text);
-      background: linear-gradient(150deg, #f7edff 0%, #fff4f8 48%, #f1edff 100%);
-    }
-
-    button, input, select {
-      font: inherit;
-    }
-
-    .app {
-      width: 100%;
-      max-width: 520px;
-      min-height: 100vh;
-      margin: 0 auto;
-      padding: 24px 20px 18px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 30px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 17px;
-      font-weight: 800;
-      letter-spacing: -.4px;
-    }
-
-    .brand-icon {
-      width: 42px;
-      height: 42px;
-      display: grid;
-      place-items: center;
-      border-radius: 15px;
-      color: white;
-      font-size: 21px;
-      background: linear-gradient(135deg, var(--purple), var(--pink));
-      box-shadow: 0 7px 18px #a97bda45;
-    }
-
-    .class-pill {
-      padding: 9px 12px;
-      border: 1px solid #e9d8fa;
-      border-radius: 30px;
-      background: #ffffffb8;
-      color: var(--purple-dark);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .welcome {
-      margin-bottom: 25px;
-    }
-
-    .eyebrow {
-      margin: 0 0 9px;
-      color: var(--purple);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(31px, 8vw, 42px);
-      line-height: 1.12;
-      letter-spacing: -1.8px;
-      font-weight: 850;
-    }
-
-    h1 span {
-      color: var(--purple);
-    }
-
-    .intro {
-      max-width: 350px;
-      margin: 13px 0 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.75;
-    }
-
-    .form-card {
-      padding: 23px 20px 20px;
-      border: 1px solid #ffffff;
-      border-radius: 26px;
-      background: var(--surface);
-      box-shadow: 0 16px 45px #69448a12;
-    }
-
-    .form-heading {
-      margin-bottom: 21px;
-    }
-
-    .form-heading h2 {
-      margin: 0 0 6px;
-      font-size: 19px;
-      letter-spacing: -.4px;
-    }
-
-    .form-heading p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.6;
-    }
-
-    .field {
-      margin-bottom: 19px;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 9px;
-      font-size: 13px;
-      font-weight: 750;
-    }
-
-    .input-wrap {
-      position: relative;
-    }
-
-    .field-icon {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 17px;
-      pointer-events: none;
-    }
-
-    input, select {
-      display: block;
-      width: 100%;
-      min-height: 53px;
-      padding: 14px 14px 14px 43px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      outline: none;
-      background: #fcfaff;
-      color: var(--text);
-      font-size: 14px;
-      transition: border-color .2s, box-shadow .2s;
-    }
-
-    input::placeholder {
-      color: #b4a9bf;
-    }
-
-    input:focus, select:focus {
-      border-color: #b28be9;
-      box-shadow: 0 0 0 3px #a777e51a;
-    }
-
-    select {
-      appearance: none;
-      padding-right: 38px;
-      cursor: pointer;
-    }
-
-    .select-arrow {
-      position: absolute;
-      right: 15px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #9884ad;
-      pointer-events: none;
-    }
-
-    .submit-btn {
-      width: 100%;
-      min-height: 55px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      margin-top: 6px;
-      padding: 15px;
-      border: 0;
-      border-radius: 15px;
-      color: #fff;
-      background: linear-gradient(105deg, #8954d8, #cf79d0 60%, #ed80b6);
-      box-shadow: 0 9px 20px #a36cce38;
-      font-size: 15px;
-      font-weight: 800;
-      cursor: pointer;
-      transition: transform .2s, opacity .2s;
-    }
-
-    .submit-btn:active {
-      transform: scale(.985);
-    }
-
-    .submit-btn:disabled {
-      opacity: .65;
-      cursor: wait;
-      box-shadow: none;
-    }
-
-    .warning {
-      margin: 13px 0 0;
-      text-align: center;
-      color: #b44a70;
-      font-size: 11px;
-      font-weight: 700;
-      line-height: 1.6;
-    }
-
-    .status {
-      display: none;
-      margin-top: 17px;
-      padding: 13px 14px;
-      border-radius: 13px;
-      font-size: 12px;
-      line-height: 1.65;
-      overflow-wrap: anywhere;
-    }
-
-    .status.show {
-      display: block;
-    }
-
-    .status.info {
-      background: #f2eaff;
-      color: #6842a0;
-    }
-
-    .status.success {
-      background: #e8f8ed;
-      color: #287044;
-    }
-
-    .status.error {
-      background: #fff0f2;
-      color: #a82e48;
-    }
-
-    .bottom-note {
-      margin-top: auto;
-      padding-top: 27px;
-      text-align: center;
-      color: #9b8ca8;
-      font-size: 11px;
-      line-height: 1.8;
-    }
-
-    .bottom-note strong {
-      color: #81659e;
-    }
-
-    @media (max-width: 360px) {
-      .app {
-        padding: 19px 14px 15px;
-      }
-
-      .form-card {
-        padding: 20px 16px;
-      }
-
-      h1 {
-        font-size: 32px;
-      }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#8954dc">
+<title>Absensi Kelas 9E</title>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<style>
+:root{--p:#8954dc;--pink:#ef82b8;--ink:#352348;--muted:#9687a4;--bg:#faf6ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,sans-serif}
+button,input{font:inherit}
+.app{max-width:480px;min-height:100dvh;margin:auto;background:linear-gradient(160deg,#f7edff,#fff8fc 50%,#f3edff);padding:23px 19px 95px;position:relative}
+.top{display:flex;justify-content:space-between;align-items:center}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
+.logo{width:43px;height:43px;display:grid;place-items:center;border-radius:15px;color:white;font-size:23px;background:linear-gradient(140deg,var(--p),var(--pink));box-shadow:0 7px 18px #8954dc45}
+.pill{background:#fff;border:1px solid #eee1fa;border-radius:30px;padding:9px 12px;font-size:11px;font-weight:bold;color:var(--p)}
+.hero{margin:29px 0 23px}
+.eyebrow{color:var(--p);font-size:11px;font-weight:bold;letter-spacing:2px}
+h1{font-size:36px;letter-spacing:-1.5px;line-height:1.13;margin:12px 0}
+h1 span{color:var(--p)}
+.desc{font-size:13px;color:var(--muted);line-height:1.7;max-width:330px}
+.banner{position:relative;overflow:hidden;background:linear-gradient(120deg,#8750d6,#b06cdb 55%,#ec8dbd);border-radius:23px;padding:20px;color:white;margin-bottom:22px;box-shadow:0 10px 25px #9b65d42c}
+.banner:after{content:"✦";position:absolute;right:17px;top:-19px;font-size:100px;color:#ffffff20}
+.banner small{font-size:11px;opacity:.85}
+.banner strong{display:block;font-size:20px;margin-top:8px}
+.banner p{font-size:12px;line-height:1.6;max-width:260px;margin-bottom:0}
+.section-title{display:flex;justify-content:space-between;align-items:center;margin:25px 0 13px}
+.section-title h2{font-size:17px;margin:0}
+.section-title span{font-size:11px;color:var(--muted)}
+.card{background:#fff;border:1px solid #f0e7f8;border-radius:22px;padding:19px;box-shadow:0 8px 24px #60437d0b}
+.label{display:block;font-size:12px;font-weight:bold;margin:17px 0 9px}
+.inputbox{position:relative}
+.inputbox .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:17px}
+input{width:100%;height:51px;border:1px solid #eee5f5;border-radius:13px;background:#fdfbff;padding:12px 13px 12px 43px;outline:none;color:var(--ink)}
+input:focus{border-color:#b38ae8;box-shadow:0 0 0 3px #8954dc12}
+.status-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+.status-option{position:relative}
+.status-option input{position:absolute;opacity:0;pointer-events:none}
+.status-option label{height:91px;border:1px solid #eee5f5;border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;margin:0;cursor:pointer;background:#fff;transition:.2s}
+.status-option .emoji{font-size:23px}
+.status-option .word{font-size:12px;font-weight:bold}
+.status-option input:checked+label{border:2px solid var(--p);background:#f5edff;color:var(--p);box-shadow:0 5px 13px #8954dc12}
+.status-option label:active{transform:scale(.96)}
+.info-row{display:flex;align-items:center;gap:12px;padding:13px;background:#faf6ff;border-radius:14px;margin-top:18px}
+.info-icon{width:38px;height:38px;display:grid;place-items:center;background:white;border-radius:12px;font-size:19px}
+.info-row strong{font-size:12px;display:block}
+.info-row small{font-size:11px;color:var(--muted);display:block;margin-top:5px;line-height:1.5}
+.submit{border:0;width:100%;height:54px;border-radius:15px;margin-top:18px;background:linear-gradient(105deg,var(--p),#b36bd7,var(--pink));color:white;font-weight:bold;font-size:14px;box-shadow:0 8px 20px #a06bce35;cursor:pointer;transition:transform .18s,opacity .18s}
+.submit:active{transform:scale(.975)}
+.submit:disabled{opacity:.6;cursor:wait}
+.warning{text-align:center;font-size:11px;color:#b74770;font-weight:bold;margin:12px 0 0;line-height:1.6}
+.message{display:none;padding:13px;border-radius:13px;font-size:12px;line-height:1.6;overflow-wrap:anywhere;margin-top:15px}
+.message.show{display:block}.message.info{background:#f2eaff;color:#6842a0}.message.success{background:#e7f8eb;color:#286a40}.message.error{background:#fff0f2;color:#a82e48}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.step{background:#fff;border:1px solid #f0e7f8;border-radius:15px;padding:13px 8px;text-align:center}
+.step b{display:block;font-size:19px;margin-bottom:7px}
+.step span{font-size:10px;line-height:1.5;color:var(--muted)}
+.footer{text-align:center;color:#a394b0;font-size:10px;margin-top:27px;line-height:1.8}
+.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#ffffffed;backdrop-filter:blur(15px);border-top:1px solid #eee5f5;display:grid;grid-template-columns:repeat(3,1fr);padding:10px 12px calc(10px + env(safe-area-inset-bottom));z-index:5}
+.nav button{border:0;background:transparent;color:#9b8bab;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:10px;cursor:pointer;padding:5px}
+.nav button .navico{font-size:20px}
+.nav button.active{color:var(--p);font-weight:bold}
+.hidden{display:none}
+@media(min-width:481px){body{padding:15px 0}.app{border-radius:28px;overflow:hidden;box-shadow:0 12px 55px #6c43851a}.nav{bottom:15px;border-radius:0 0 28px 28px}}
+</style>
 </head>
-
 <body>
-  <main class="app">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-icon">✦</div>
-        <span>HadirYuk</span>
+<main class="app" id="beranda">
+  <header class="top">
+    <div class="brand"><div class="logo">✦</div> HadirYuk</div>
+    <div class="pill">🎓 KELAS 9E</div>
+  </header>
+
+  <section class="hero">
+    <div class="eyebrow">PORTAL KEHADIRAN SISWA</div>
+    <h1>Absensi Kelas<br><span>9E.</span> 👋</h1>
+    <p class="desc">Hai, siswa 9E! Catat kehadiranmu hari ini dengan mudah. Isi data dengan benar lalu kirim absensi.</p>
+  </section>
+
+  <section class="banner">
+    <small>✦ ABSENSI HARIAN</small>
+    <strong>Hadir hari ini?</strong>
+    <p>Pastikan nama dan status sudah benar sebelum menekan tombol kirim.</p>
+  </section>
+
+  <section id="form-section">
+    <div class="section-title"><h2>Form Absensi</h2><span>Lengkapi data ↓</span></div>
+    <form class="card" id="attendanceForm">
+      <label class="label" for="nama">Nama lengkap</label>
+      <div class="inputbox"><span class="ico">👤</span><input id="nama" name="nama" placeholder="Masukkan nama lengkap" maxlength="100" autocomplete="name" required></div>
+
+      <div class="section-title"><h2 style="font-size:13px">Pilih kehadiran</h2><span>Ketuk salah satu</span></div>
+      <div class="status-grid">
+        <div class="status-option"><input type="radio" id="hadir" name="status" value="Hadir" required><label for="hadir"><span class="emoji">✅</span><span class="word">Hadir</span></label></div>
+        <div class="status-option"><input type="radio" id="izin" name="status" value="Izin"><label for="izin"><span class="emoji">📝</span><span class="word">Izin</span></label></div>
+        <div class="status-option"><input type="radio" id="sakit" name="status" value="Sakit"><label for="sakit"><span class="emoji">🤒</span><span class="word">Sakit</span></label></div>
       </div>
-      <div class="class-pill">KELAS 9E</div>
-    </header>
 
-    <section class="welcome">
-      <p class="eyebrow">PORTAL KEHADIRAN SISWA</p>
-      <h1>Halo, Siswa<br><span>9E!</span> 👋</h1>
-      <p class="intro">
-        Selamat datang di halaman absensi kelas. Isi data kehadiranmu dengan
-        benar, lalu kirim absensi untuk mencatat kehadiran.
-      </p>
-    </section>
-
-    <section class="form-card">
-      <div class="form-heading">
-        <h2>Isi Absensi</h2>
-        <p>Lengkapi informasi berikut sebelum mengirim.</p>
+      <div class="info-row">
+        <div class="info-icon">📍</div>
+        <div><strong>Lokasi GPS</strong><small>Diminta setelah tombol kirim ditekan.</small></div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">📸</div>
+        <div><strong>Verifikasi kamera</strong><small>Kamera depan dan belakang akan dicoba secara berurutan.</small></div>
       </div>
 
-      <form id="attendanceForm">
-        <div class="field">
-          <label for="nama">Nama lengkap</label>
-          <div class="input-wrap">
-            <span class="field-icon">👤</span>
-            <input
-              id="nama"
-              name="nama"
-              type="text"
-              placeholder="Masukkan nama lengkap"
-              maxlength="100"
-              autocomplete="name"
-              required
-            >
-          </div>
-        </div>
+      <button id="submitButton" class="submit" type="submit">📨 &nbsp; Kirim Absensi &nbsp; →</button>
+      <p class="warning">Jika tidak ada absensi maka dinyatakan alpha!</p>
+      <div id="message" class="message" role="status" aria-live="polite"></div>
+    </form>
+  </section>
 
-        <div class="field">
-          <label for="status">Status kehadiran</label>
-          <div class="input-wrap">
-            <span class="field-icon">📋</span>
-            <select id="status" name="status" required>
-              <option value="">Pilih status kehadiran</option>
-              <option value="Hadir">Hadir</option>
-              <option value="Izin">Izin</option>
-              <option value="Sakit">Sakit</option>
-            </select>
-            <span class="select-arrow">⌄</span>
-          </div>
-        </div>
+  <section id="panduan" class="hidden">
+    <div class="section-title"><h2>Panduan Absensi</h2></div>
+    <div class="card">
+      <p style="font-size:13px;line-height:1.8;color:#887993">Ikuti langkah berikut agar absensi dapat terkirim dengan benar.</p>
+      <div class="steps">
+        <div class="step"><b>✍️</b><span>Isi nama lengkap</span></div>
+        <div class="step"><b>☑️</b><span>Pilih status</span></div>
+        <div class="step"><b>📨</b><span>Kirim dan beri izin</span></div>
+      </div>
+      <button class="submit" type="button" id="backButton">← Kembali ke Absensi</button>
+    </div>
+  </section>
 
-        <button id="submitButton" class="submit-btn" type="submit">
-          <span>📨</span>
-          <span>Kirim Absensi</span>
-          <span>→</span>
-        </button>
+  <section id="tentang" class="hidden">
+    <div class="section-title"><h2>Tentang HadirYuk</h2></div>
+    <div class="card">
+      <div style="font-size:35px">💜</div>
+      <h3>Absensi Kelas 9E</h3>
+      <p style="font-size:13px;line-height:1.8;color:#887993">HadirYuk membantu pencatatan kehadiran siswa melalui formulir digital. Data dikirim melalui email setelah proses lokasi dan kamera berhasil.</p>
+      <button class="submit" type="button" id="aboutBack">Kembali ke Absensi</button>
+    </div>
+  </section>
 
-        <p class="warning">
-          Jika tidak ada absensi maka dinyatakan alpha!
-        </p>
+  <footer class="footer">HadirYuk · Absensi Kelas 9E<br>Gunakan dengan jujur dan bertanggung jawab.</footer>
+</main>
 
-        <div id="message" class="status" role="status" aria-live="polite"></div>
-      </form>
-    </section>
+<nav class="nav">
+  <button class="active" data-page="beranda"><span class="navico">⌂</span>Absensi</button>
+  <button data-page="panduan"><span class="navico">☷</span>Panduan</button>
+  <button data-page="tentang"><span class="navico">♡</span>Tentang</button>
+</nav>
 
-    <footer class="bottom-note">
-      <strong>HadirYuk · Kelas 9E</strong><br>
-      Isi absensi dengan jujur dan bertanggung jawab.
-    </footer>
-  </main>
+<script>
+const EMAILJS_PUBLIC_KEY = "A607Op6M2VN9lRsLi";
+const EMAILJS_SERVICE_ID = "service_82qgoat";
+const EMAILJS_TEMPLATE_ID = "template_u6zcwpy";
+const CLOUDINARY_CLOUD_NAME = "qna1hjte";
+const CLOUDINARY_UPLOAD_PRESET = "absensi_upload";
 
-  <script>
-    // KONFIGURASI EMAILJS — DIPERTAHANKAN
-    const EMAILJS_PUBLIC_KEY = "A607Op6M2VN9lRsLi";
-    const EMAILJS_SERVICE_ID = "service_82qgoat";
-    const EMAILJS_TEMPLATE_ID = "template_u6zcwpy";
+emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
 
-    // KONFIGURASI CLOUDINARY — DIPERTAHANKAN
-    const CLOUDINARY_CLOUD_NAME = "qna1hjte";
-    const CLOUDINARY_UPLOAD_PRESET = "absensi_upload";
+const form = document.getElementById("attendanceForm");
+const button = document.getElementById("submitButton");
+const message = document.getElementById("message");
 
-    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+function showMessage(text, type) {
+  message.textContent = text;
+  message.className = "message show " + type;
+}
 
-    const form = document.getElementById("attendanceForm");
-    const button = document.getElementById("submitButton");
-    const message = document.getElementById("message");
+function showPage(page) {
+  ["form-section", "panduan", "tentang"].forEach(id => {
+    document.getElementById(id).classList.add("hidden");
+  });
+  if (page === "beranda") {
+    document.getElementById("form-section").classList.remove("hidden");
+  } else {
+    document.getElementById(page).classList.remove("hidden");
+  }
+  document.querySelectorAll(".nav button").forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.page === page);
+  });
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
-    function showMessage(text, type) {
-      message.textContent = text;
-      message.className = "status show " + type;
+document.querySelectorAll(".nav button").forEach(btn => {
+  btn.addEventListener("click", () => showPage(btn.dataset.page));
+});
+document.getElementById("backButton").addEventListener("click", () => showPage("beranda"));
+document.getElementById("aboutBack").addEventListener("click", () => showPage("beranda"));
+
+function getLocation() {
+  return new Promise((resolve, reject) => {
+    if (!navigator.geolocation) {
+      reject(new Error("Browser tidak mendukung GPS."));
+      return;
     }
+    navigator.geolocation.getCurrentPosition(
+      pos => resolve({ latitude: pos.coords.latitude, longitude: pos.coords.longitude }),
+      err => {
+        const errors = {
+          1: "Izin lokasi ditolak. Absensi dibatalkan.",
+          2: "Lokasi tidak tersedia. Coba lagi.",
+          3: "GPS terlalu lama merespons. Coba lagi."
+        };
+        reject(new Error(errors[err.code] || "Gagal mendapatkan lokasi."));
+      },
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
+    );
+  });
+}
 
-    function getLocation() {
-      return new Promise((resolve, reject) => {
-        if (!navigator.geolocation) {
-          reject(new Error("Browser tidak mendukung GPS."));
-          return;
-        }
-
-        navigator.geolocation.getCurrentPosition(
-          position => resolve({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude
-          }),
-          error => {
-            const errors = {
-              1: "Izin lokasi ditolak. Absensi dibatalkan.",
-              2: "Lokasi tidak tersedia. Coba lagi.",
-              3: "GPS terlalu lama merespons. Coba lagi."
-            };
-
-            reject(new Error(
-              errors[error.code] || "Gagal mendapatkan lokasi."
-            ));
-          },
-          {
-            enableHighAccuracy: true,
-            timeout: 20000,
-            maximumAge: 0
-          }
-        );
-      });
-    }
-
-    async function capturePhoto(facingMode) {
-      if (!navigator.mediaDevices?.getUserMedia) {
-        throw new Error(
-          "Kamera tidak didukung. Buka website melalui HTTPS."
-        );
-      }
-
-      let stream;
-
-      try {
-        stream = await navigator.mediaDevices.getUserMedia({
-          audio: false,
-          video: {
-            facingMode: { ideal: facingMode },
-            width: { ideal: 1280 },
-            height: { ideal: 720 }
-          }
-        });
-
-        const video = document.createElement("video");
-        video.autoplay = true;
-        video.muted = true;
-        video.playsInline = true;
-        video.srcObject = stream;
-
-        await new Promise((resolve, reject) => {
-          let finished = false;
-
-          const timer = setTimeout(() => {
-            if (!finished) {
-              finished = true;
-              reject(new Error("Kamera terlalu lama merespons."));
-            }
-          }, 12000);
-
-          video.onloadedmetadata = () => {
-            if (!finished) {
-              finished = true;
-              clearTimeout(timer);
-              resolve();
-            }
-          };
-
-          video.onerror = () => {
-            if (!finished) {
-              finished = true;
-              clearTimeout(timer);
-              reject(new Error("Kamera gagal dibuka."));
-            }
-          };
-        });
-
-        await video.play();
-
-        if (!video.videoWidth || !video.videoHeight) {
-          throw new Error("Gambar kamera tidak tersedia.");
-        }
-
-        const canvas = document.createElement("canvas");
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-
-        const context = canvas.getContext("2d");
-
-        if (!context) {
-          throw new Error("Gagal memproses foto kamera.");
-        }
-
-        context.drawImage(video, 0, 0);
-
-        return await new Promise((resolve, reject) => {
-          canvas.toBlob(blob => {
-            if (blob) {
-              resolve(blob);
-            } else {
-              reject(new Error("Gagal mengambil foto."));
-            }
-          }, "image/jpeg", 0.82);
-        });
-      } finally {
-        if (stream) {
-          stream.getTracks().forEach(track => track.stop());
-        }
-      }
-    }
-
-    async function uploadPhoto(blob, label) {
-      const data = new FormData();
-      data.append("file", blob, label + ".jpg");
-      data.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-
-      const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
-        {
-          method: "POST",
-          body: data
-        }
-      );
-
-      const result = await response.json();
-
-      if (!response.ok || !result.secure_url) {
-        throw new Error(
-          "Upload foto " + label + " gagal. Periksa konfigurasi Cloudinary."
-        );
-      }
-
-      return result.secure_url;
-    }
-
-    form.addEventListener("submit", async event => {
-      event.preventDefault();
-
-      if (button.disabled) return;
-
-      const nama = document.getElementById("nama").value.trim();
-      const status = document.getElementById("status").value;
-
-      if (!nama || !status) {
-        showMessage(
-          "Isi nama dan status kehadiran terlebih dahulu.",
-          "error"
-        );
-        return;
-      }
-
-      if (!window.isSecureContext) {
-        showMessage(
-          "Buka website melalui HTTPS agar GPS dan kamera dapat digunakan.",
-          "error"
-        );
-        return;
-      }
-
-      button.disabled = true;
-
-      try {
-        showMessage("Meminta izin lokasi GPS...", "info");
-        const location = await getLocation();
-
-        showMessage("Membuka kamera depan...", "info");
-        const frontPhoto = await capturePhoto("user");
-
-        showMessage("Membuka kamera belakang...", "info");
-        const backPhoto = await capturePhoto("environment");
-
-        showMessage("Mengunggah foto absensi...", "info");
-
-        const [fotoDepan, fotoBelakang] = await Promise.all([
-          uploadPhoto(frontPhoto, "depan"),
-          uploadPhoto(backPhoto, "belakang")
-        ]);
-
-        const now = new Date();
-
-        const tanggal = now.toLocaleDateString("id-ID", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric"
-        });
-
-        const waktu = now.toLocaleTimeString("id-ID", {
-          hour: "2-digit",
-          minute: "2-digit",
-          second: "2-digit"
-        });
-
-        const linkLokasi =
-          `https://www.google.com/maps?q=${location.latitude},${location.longitude}`;
-
-        showMessage("Mengirim data absensi ke email...", "info");
-
-        await emailjs.send(
-          EMAILJS_SERVICE_ID,
-          EMAILJS_TEMPLATE_ID,
-          {
-            nama: nama,
-            status: status,
-            tanggal: tanggal,
-            waktu: waktu,
-            lokasi: `${location.latitude}, ${location.longitude}`,
-            link_lokasi: linkLokasi,
-            foto_depan: fotoDepan,
-            foto_belakang: fotoBelakang
-          }
-        );
-
-        showMessage("Absensi berhasil dikirim!", "success");
-        form.reset();
-      } catch (error) {
-        console.error("Absensi gagal:", error);
-
-        showMessage(
-          error.message ||
-          "Absensi gagal dikirim. Periksa koneksi dan konfigurasi.",
-          "error"
-        );
-      } finally {
-        button.disabled = false;
+async function capturePhoto(facingMode) {
+  if (!navigator.mediaDevices?.getUserMedia) {
+    throw new Error("Kamera tidak didukung. Buka website melalui HTTPS.");
+  }
+  let stream;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      audio: false,
+      video: {
+        facingMode: { ideal: facingMode },
+        width: { ideal: 1280 },
+        height: { ideal: 720 }
       }
     });
-  </script>
+
+    const video = document.createElement("video");
+    video.autoplay = true;
+    video.muted = true;
+    video.playsInline = true;
+    video.srcObject = stream;
+
+    await new Promise((resolve, reject) => {
+      let done = false;
+      const timer = setTimeout(() => {
+        if (!done) {
+          done = true;
+          reject(new Error("Kamera terlalu lama merespons."));
+        }
+      }, 12000);
+
+      video.onloadedmetadata = () => {
+        if (!done) {
+          done = true;
+          clearTimeout(timer);
+          resolve();
+        }
+      };
+      video.onerror = () => {
+        if (!done) {
+          done = true;
+          clearTimeout(timer);
+          reject(new Error("Kamera gagal dibuka."));
+        }
+      };
+    });
+
+    await video.play();
+    if (!video.videoWidth || !video.videoHeight) {
+      throw new Error("Gambar kamera tidak tersedia.");
+    }
+
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) throw new Error("Gagal memproses foto kamera.");
+    ctx.drawImage(video, 0, 0);
+
+    return await new Promise((resolve, reject) => {
+      canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error("Gagal mengambil foto.")), "image/jpeg", 0.82);
+    });
+  } finally {
+    if (stream) stream.getTracks().forEach(track => track.stop());
+  }
+}
+
+async function uploadPhoto(blob, label) {
+  const data = new FormData();
+  data.append("file", blob, label + ".jpg");
+  data.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+  const response = await fetch(
+    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+    { method: "POST", body: data }
+  );
+  const result = await response.json();
+
+  if (!response.ok || !result.secure_url) {
+    throw new Error("Upload foto " + label + " gagal. Periksa konfigurasi Cloudinary.");
+  }
+  return result.secure_url;
+}
+
+form.addEventListener("submit", async event => {
+  event.preventDefault();
+  if (button.disabled) return;
+
+  const nama = document.getElementById("nama").value.trim();
+  const selectedStatus = document.querySelector('input[name="status"]:checked');
+  if (!nama || !selectedStatus) {
+    showMessage("Isi nama dan pilih status kehadiran terlebih dahulu.", "error");
+    return;
+  }
+
+  if (!window.isSecureContext) {
+    showMessage("Buka website melalui HTTPS agar GPS dan kamera dapat digunakan.", "error");
+    return;
+  }
+
+  button.disabled = true;
+
+  try {
+    showMessage("Meminta izin lokasi GPS...", "info");
+    const location = await getLocation();
+
+    showMessage("Membuka kamera depan...", "info");
+    const frontPhoto = await capturePhoto("user");
+
+    showMessage("Membuka kamera belakang...", "info");
+    const backPhoto = await capturePhoto("environment");
+
+    showMessage("Mengunggah foto absensi...", "info");
+    const [fotoDepan, fotoBelakang] = await Promise.all([
+      uploadPhoto(frontPhoto, "depan"),
+      uploadPhoto(backPhoto, "belakang")
+    ]);
+
+    const now = new Date();
+    const tanggal = now.toLocaleDateString("id-ID", {
+      day: "2-digit", month: "long", year: "numeric"
+    });
+    const waktu = now.toLocaleTimeString("id-ID", {
+      hour: "2-digit", minute: "2-digit", second: "2-digit"
+    });
+    const linkLokasi = `https://www.google.com/maps?q=${location.latitude},${location.longitude}`;
+
+    showMessage("Mengirim data absensi ke email...", "info");
+
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      nama: nama,
+      status: selectedStatus.value,
+      tanggal: tanggal,
+      waktu: waktu,
+      lokasi: `${location.latitude}, ${location.longitude}`,
+      link_lokasi: linkLokasi,
+      foto_depan: fotoDepan,
+      foto_belakang: fotoBelakang
+    });
+
+    showMessage("Absensi berhasil dikirim!", "success");
+    form.reset();
+  } catch (error) {
+    console.error("Absensi gagal:", error);
+    showMessage(error.message || "Absensi gagal dikirim. Periksa koneksi dan konfigurasi.", "error");
+  } finally {
+    button.disabled = false;
+  }
+});
+</script>
 </body>
 </html>
