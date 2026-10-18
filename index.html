@@ -3,357 +3,733 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#8954dc">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Absensi Kelas 9E</title>
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
 <style>
-:root{--p:#8954dc;--pink:#ef82b8;--ink:#352348;--muted:#9687a4;--bg:#faf6ff}
-*{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,sans-serif}
-button,input{font:inherit}
-.app{max-width:480px;min-height:100dvh;margin:auto;background:linear-gradient(160deg,#f7edff,#fff8fc 50%,#f3edff);padding:23px 19px 95px;position:relative}
-.top{display:flex;justify-content:space-between;align-items:center}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px}
-.logo{width:43px;height:43px;display:grid;place-items:center;border-radius:15px;color:white;font-size:23px;background:linear-gradient(140deg,var(--p),var(--pink));box-shadow:0 7px 18px #8954dc45}
-.pill{background:#fff;border:1px solid #eee1fa;border-radius:30px;padding:9px 12px;font-size:11px;font-weight:bold;color:var(--p)}
-.hero{margin:29px 0 23px}
-.eyebrow{color:var(--p);font-size:11px;font-weight:bold;letter-spacing:2px}
-h1{font-size:36px;letter-spacing:-1.5px;line-height:1.13;margin:12px 0}
-h1 span{color:var(--p)}
-.desc{font-size:13px;color:var(--muted);line-height:1.7;max-width:330px}
-.banner{position:relative;overflow:hidden;background:linear-gradient(120deg,#8750d6,#b06cdb 55%,#ec8dbd);border-radius:23px;padding:20px;color:white;margin-bottom:22px;box-shadow:0 10px 25px #9b65d42c}
-.banner:after{content:"✦";position:absolute;right:17px;top:-19px;font-size:100px;color:#ffffff20}
-.banner small{font-size:11px;opacity:.85}
-.banner strong{display:block;font-size:20px;margin-top:8px}
-.banner p{font-size:12px;line-height:1.6;max-width:260px;margin-bottom:0}
-.section-title{display:flex;justify-content:space-between;align-items:center;margin:25px 0 13px}
-.section-title h2{font-size:17px;margin:0}
-.section-title span{font-size:11px;color:var(--muted)}
-.card{background:#fff;border:1px solid #f0e7f8;border-radius:22px;padding:19px;box-shadow:0 8px 24px #60437d0b}
-.label{display:block;font-size:12px;font-weight:bold;margin:17px 0 9px}
-.inputbox{position:relative}
-.inputbox .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:17px}
-input{width:100%;height:51px;border:1px solid #eee5f5;border-radius:13px;background:#fdfbff;padding:12px 13px 12px 43px;outline:none;color:var(--ink)}
-input:focus{border-color:#b38ae8;box-shadow:0 0 0 3px #8954dc12}
-.status-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.status-option{position:relative}
-.status-option input{position:absolute;opacity:0;pointer-events:none}
-.status-option label{height:91px;border:1px solid #eee5f5;border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;margin:0;cursor:pointer;background:#fff;transition:.2s}
-.status-option .emoji{font-size:23px}
-.status-option .word{font-size:12px;font-weight:bold}
-.status-option input:checked+label{border:2px solid var(--p);background:#f5edff;color:var(--p);box-shadow:0 5px 13px #8954dc12}
-.status-option label:active{transform:scale(.96)}
-.info-row{display:flex;align-items:center;gap:12px;padding:13px;background:#faf6ff;border-radius:14px;margin-top:18px}
-.info-icon{width:38px;height:38px;display:grid;place-items:center;background:white;border-radius:12px;font-size:19px}
-.info-row strong{font-size:12px;display:block}
-.info-row small{font-size:11px;color:var(--muted);display:block;margin-top:5px;line-height:1.5}
-.submit{border:0;width:100%;height:54px;border-radius:15px;margin-top:18px;background:linear-gradient(105deg,var(--p),#b36bd7,var(--pink));color:white;font-weight:bold;font-size:14px;box-shadow:0 8px 20px #a06bce35;cursor:pointer;transition:transform .18s,opacity .18s}
-.submit:active{transform:scale(.975)}
-.submit:disabled{opacity:.6;cursor:wait}
-.warning{text-align:center;font-size:11px;color:#b74770;font-weight:bold;margin:12px 0 0;line-height:1.6}
-.message{display:none;padding:13px;border-radius:13px;font-size:12px;line-height:1.6;overflow-wrap:anywhere;margin-top:15px}
-.message.show{display:block}.message.info{background:#f2eaff;color:#6842a0}.message.success{background:#e7f8eb;color:#286a40}.message.error{background:#fff0f2;color:#a82e48}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.step{background:#fff;border:1px solid #f0e7f8;border-radius:15px;padding:13px 8px;text-align:center}
-.step b{display:block;font-size:19px;margin-bottom:7px}
-.step span{font-size:10px;line-height:1.5;color:var(--muted)}
-.footer{text-align:center;color:#a394b0;font-size:10px;margin-top:27px;line-height:1.8}
-.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:480px;background:#ffffffed;backdrop-filter:blur(15px);border-top:1px solid #eee5f5;display:grid;grid-template-columns:repeat(3,1fr);padding:10px 12px calc(10px + env(safe-area-inset-bottom));z-index:5}
-.nav button{border:0;background:transparent;color:#9b8bab;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:10px;cursor:pointer;padding:5px}
-.nav button .navico{font-size:20px}
-.nav button.active{color:var(--p);font-weight:bold}
-.hidden{display:none}
-@media(min-width:481px){body{padding:15px 0}.app{border-radius:28px;overflow:hidden;box-shadow:0 12px 55px #6c43851a}.nav{bottom:15px;border-radius:0 0 28px 28px}}
+:root {
+  --purple: #6d28d9;
+  --deep: #4c1d95;
+  --light: #f5f1ff;
+  --pink: #f472b6;
+  --text: #241744;
+  --muted: #817797;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background: #f7f5fc;
+  min-height: 100vh;
+}
+
+header {
+  background: linear-gradient(120deg, #4c1d95, #6d28d9 72%, #a855f7);
+  color: white;
+  padding: 23px 20px 32px;
+  border-radius: 0 0 28px 28px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  max-width: 700px;
+  margin: auto;
+}
+
+.brand {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: .3px;
+}
+
+.brand span {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-right: 7px;
+  border-radius: 11px;
+  background: rgba(255,255,255,.16);
+  vertical-align: middle;
+}
+
+.live {
+  font-size: 11px;
+  padding: 7px 10px;
+  border: 1px solid #ffffff50;
+  background: #ffffff18;
+  border-radius: 20px;
+}
+
+.container {
+  max-width: 700px;
+  margin: auto;
+  padding: 0 17px 35px;
+}
+
+.welcome {
+  margin-top: -8px;
+  background: linear-gradient(125deg, #4c1d95 0%, #6d28d9 68%, #a855f7 100%);
+  border-radius: 24px;
+  color: white;
+  padding: 25px 21px;
+  min-height: 218px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 12px 30px #5b21b526;
+}
+
+.welcome::after {
+  content: "";
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  right: -65px;
+  top: -55px;
+  border: 1px solid #ffffff30;
+  border-radius: 50%;
+  box-shadow: 0 0 0 20px #ffffff08, 0 0 0 40px #ffffff08;
+}
+
+.welcome-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  color: #e9ddff;
+  margin-bottom: 10px;
+}
+
+.welcome h1 {
+  max-width: 390px;
+  font-size: clamp(29px, 7vw, 39px);
+  line-height: 1.13;
+  letter-spacing: -.8px;
+}
+
+.welcome h1 span {
+  color: #f9a8d4;
+}
+
+.welcome-desc {
+  margin-top: 13px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #eee7ff;
+  max-width: 350px;
+}
+
+.calendar-art {
+  position: absolute;
+  right: 20px;
+  bottom: 23px;
+  width: 83px;
+  height: 83px;
+  border-radius: 19px;
+  background: linear-gradient(145deg, #8b5cf6, #ec4899);
+  display: grid;
+  place-items: center;
+  transform: rotate(7deg);
+  box-shadow: 0 8px 24px #2e106450;
+}
+
+.calendar-art .paper {
+  width: 49px;
+  height: 52px;
+  background: white;
+  color: #6d28d9;
+  border-radius: 8px;
+  text-align: center;
+  padding-top: 5px;
+  font-size: 23px;
+  font-weight: 800;
+}
+
+.calendar-art .paper small {
+  display: block;
+  height: 10px;
+  background: #f0abfc;
+  border-radius: 5px 5px 0 0;
+  margin: -5px 0 4px;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 17px 0 25px;
+}
+
+.stat {
+  background: white;
+  border: 1px solid #eee8fa;
+  border-radius: 17px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  box-shadow: 0 4px 15px #38206408;
+}
+
+.stat-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  background: #eee7ff;
+  color: #6d28d9;
+  border-radius: 13px;
+  font-size: 21px;
+  flex-shrink: 0;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 5px;
+}
+
+.stat-value {
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.section-title {
+  font-size: 19px;
+  font-weight: 800;
+  margin-bottom: 7px;
+}
+
+.section-desc {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  margin-bottom: 17px;
+}
+
+.form-card {
+  background: white;
+  border: 1px solid #eee8fa;
+  border-radius: 21px;
+  padding: 19px 15px;
+  box-shadow: 0 6px 22px #38206408;
+}
+
+.field-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 9px;
+}
+
+input[type="text"] {
+  width: 100%;
+  border: 1px solid #e5def1;
+  background: #fcfbff;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 14px;
+  outline: none;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+input[type="text"]:focus {
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 3px #8b5cf61a;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.status-option {
+  position: relative;
+  min-width: 0;
+}
+
+.status-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.status-option label {
+  min-height: 66px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #e9e2f3;
+  background: #fff;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.status-option label:hover {
+  border-color: #a78bfa;
+  background: #faf7ff;
+}
+
+.status-option input:checked + label {
+  border: 1.5px solid #7c3aed;
+  background: #f2eaff;
+  box-shadow: 0 0 0 2px #7c3aed12;
+}
+
+.status-icon {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #eee7ff;
+  color: #6d28d9;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.status-name {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.status-sub {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.reason-wrap {
+  display: none;
+  margin-top: -4px;
+}
+
+.reason-wrap.show {
+  display: block;
+}
+
+.camera-box {
+  padding: 14px;
+  border: 1px dashed #c4b5fd;
+  border-radius: 13px;
+  background: #faf8ff;
+  margin-bottom: 14px;
+}
+
+.camera-box p {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+
+.camera-box input {
+  width: 100%;
+  font-size: 12px;
+}
+
+.preview {
+  display: none;
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-top: 10px;
+}
+
+.primary-btn {
+  width: 100%;
+  border: 0;
+  border-radius: 13px;
+  background: linear-gradient(110deg, #5b21b6, #7c3aed 78%, #a855f7);
+  color: white;
+  padding: 15px;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 7px 16px #6d28d926;
+}
+
+.primary-btn:disabled {
+  opacity: .65;
+  cursor: wait;
+}
+
+.note {
+  margin-top: 13px;
+  font-size: 11px;
+  line-height: 1.7;
+  color: var(--muted);
+  text-align: center;
+}
+
+#message {
+  margin-top: 13px;
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+footer {
+  text-align: center;
+  padding: 10px 15px 28px;
+  font-size: 11px;
+  color: #9589aa;
+}
+
+@media (min-width: 540px) {
+  .welcome { padding: 30px; min-height: 235px; }
+  .calendar-art { width: 95px; height: 95px; right: 30px; }
+  .status-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .status-option label { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 370px) {
+  .calendar-art { opacity: .35; right: 10px; }
+  .welcome h1 { font-size: 29px; }
+  .status-option label { padding: 9px; gap: 7px; }
+  .status-icon { width: 29px; height: 29px; }
+}
 </style>
 </head>
+
 <body>
-<main class="app" id="beranda">
-  <header class="top">
-    <div class="brand"><div class="logo">✦</div> HadirYuk</div>
-    <div class="pill">🎓 KELAS 9E</div>
-  </header>
+<header>
+  <div class="topbar">
+    <div class="brand"><span>✓</span> HADIRYUK</div>
+    <div class="live">● Absensi Siswa</div>
+  </div>
+</header>
 
-  <section class="hero">
-    <div class="eyebrow">PORTAL KEHADIRAN SISWA</div>
-    <h1>Absensi Kelas<br><span>9E.</span> 👋</h1>
-    <p class="desc">Hai, siswa 9E! Catat kehadiranmu hari ini dengan mudah. Isi data dengan benar lalu kirim absensi.</p>
+<main class="container">
+  <section class="welcome">
+    <div class="welcome-label">HALO SISWA KELAS 9E</div>
+    <h1>Absensi<br>Kelas 9E</h1>
+    <p class="welcome-desc">
+      <strong>Mulai dari <span>sekarang.</span></strong><br>
+      Isi formulir absensi dengan benar dan sesuai keadaanmu hari ini.
+    </p>
+    <div class="calendar-art" aria-hidden="true">
+      <div class="paper"><small></small>✓</div>
+    </div>
   </section>
 
-  <section class="banner">
-    <small>✦ ABSENSI HARIAN</small>
-    <strong>Hadir hari ini?</strong>
-    <p>Pastikan nama dan status sudah benar sebelum menekan tombol kirim.</p>
+  <section class="stats">
+    <div class="stat">
+      <div class="stat-icon">▦</div>
+      <div>
+        <div class="stat-label">Tanggal hari ini</div>
+        <div class="stat-value" id="today">--</div>
+      </div>
+    </div>
+    <div class="stat">
+      <div class="stat-icon">◷</div>
+      <div>
+        <div class="stat-label">Waktu sekarang</div>
+        <div class="stat-value" id="clock">--:--:--</div>
+      </div>
+    </div>
+    <div class="stat" style="grid-column:1/-1">
+      <div class="stat-icon">✓</div>
+      <div>
+        <div class="stat-label">Jumlah siswa hadir hari ini</div>
+        <div class="stat-value" id="presentCount">Belum tersedia</div>
+      </div>
+    </div>
   </section>
 
-  <section id="form-section">
-    <div class="section-title"><h2>Form Absensi</h2><span>Lengkapi data ↓</span></div>
-    <form class="card" id="attendanceForm">
-      <label class="label" for="nama">Nama lengkap</label>
-      <div class="inputbox"><span class="ico">👤</span><input id="nama" name="nama" placeholder="Masukkan nama lengkap" maxlength="100" autocomplete="name" required></div>
+  <section>
+    <h2 class="section-title">Formulir Absensi</h2>
+    <p class="section-desc">
+      Pilih status kehadiranmu, isi nama, lalu lengkapi data yang diminta.
+    </p>
 
-      <div class="section-title"><h2 style="font-size:13px">Pilih kehadiran</h2><span>Ketuk salah satu</span></div>
+    <form class="form-card" id="attendanceForm">
+      <label class="field-label" for="nama">Nama lengkap</label>
+      <input id="nama" name="nama" type="text"
+        placeholder="Masukkan nama lengkap kamu" required>
+
+      <div class="field-label">Pilih alasan kehadiran</div>
+
       <div class="status-grid">
-        <div class="status-option"><input type="radio" id="hadir" name="status" value="Hadir" required><label for="hadir"><span class="emoji">✅</span><span class="word">Hadir</span></label></div>
-        <div class="status-option"><input type="radio" id="izin" name="status" value="Izin"><label for="izin"><span class="emoji">📝</span><span class="word">Izin</span></label></div>
-        <div class="status-option"><input type="radio" id="sakit" name="status" value="Sakit"><label for="sakit"><span class="emoji">🤒</span><span class="word">Sakit</span></label></div>
+        <div class="status-option">
+          <input type="radio" id="hadir" name="status"
+            value="Hadir" required>
+          <label for="hadir">
+            <span class="status-icon">✓</span>
+            <span><span class="status-name">Hadir</span>
+            <span class="status-sub">Masuk sekolah</span></span>
+          </label>
+        </div>
+
+        <div class="status-option">
+          <input type="radio" id="izin" name="status" value="Izin">
+          <label for="izin">
+            <span class="status-icon">▤</span>
+            <span><span class="status-name">Izin</span>
+            <span class="status-sub">Ada keperluan</span></span>
+          </label>
+        </div>
+
+        <div class="status-option">
+          <input type="radio" id="sakit" name="status" value="Sakit">
+          <label for="sakit">
+            <span class="status-icon">☹</span>
+            <span><span class="status-name">Sakit</span>
+            <span class="status-sub">Sedang sakit</span></span>
+          </label>
+        </div>
+
+        <div class="status-option">
+          <input type="radio" id="alpha" name="status" value="Alpha">
+          <label for="alpha">
+            <span class="status-icon">×</span>
+            <span><span class="status-name">Alpha</span>
+            <span class="status-sub">Tanpa keterangan</span></span>
+          </label>
+        </div>
       </div>
 
-      <div class="info-row">
-        <div class="info-icon">📍</div>
-        <div><strong>Lokasi GPS</strong><small>Diminta setelah tombol kirim ditekan.</small></div>
-      </div>
-      <div class="info-row">
-        <div class="info-icon">📸</div>
-        <div><strong>Verifikasi kamera</strong><small>Kamera depan dan belakang akan dicoba secara berurutan.</small></div>
+      <div class="reason-wrap" id="reasonWrap">
+        <label class="field-label" for="alasan">Keterangan alasan</label>
+        <input type="text" id="alasan" name="alasan"
+          placeholder="Tuliskan alasan kamu">
       </div>
 
-      <button id="submitButton" class="submit" type="submit">📨 &nbsp; Kirim Absensi &nbsp; →</button>
-      <p class="warning">Jika tidak ada absensi maka dinyatakan alpha!</p>
-      <div id="message" class="message" role="status" aria-live="polite"></div>
+      <div class="camera-box">
+        <label class="field-label" for="fotoDepan">Foto kamera depan</label>
+        <p>Ambil foto diri jika diwajibkan oleh sekolah.</p>
+        <input id="fotoDepan" type="file" accept="image/*" capture="user">
+        <img id="previewDepan" class="preview" alt="Pratinjau foto depan">
+      </div>
+
+      <div class="camera-box">
+        <label class="field-label" for="fotoBelakang">Foto kamera belakang</label>
+        <p>Ambil foto tambahan jika diperlukan.</p>
+        <input id="fotoBelakang" type="file" accept="image/*" capture="environment">
+        <img id="previewBelakang" class="preview" alt="Pratinjau foto belakang">
+      </div>
+
+      <button class="primary-btn" id="submitBtn" type="submit">
+        Kirim Absensi →
+      </button>
+
+      <p class="note">
+        Pastikan nama dan status sudah benar sebelum mengirim.
+      </p>
+      <div id="message" role="status"></div>
     </form>
   </section>
-
-  <section id="panduan" class="hidden">
-    <div class="section-title"><h2>Panduan Absensi</h2></div>
-    <div class="card">
-      <p style="font-size:13px;line-height:1.8;color:#887993">Ikuti langkah berikut agar absensi dapat terkirim dengan benar.</p>
-      <div class="steps">
-        <div class="step"><b>✍️</b><span>Isi nama lengkap</span></div>
-        <div class="step"><b>☑️</b><span>Pilih status</span></div>
-        <div class="step"><b>📨</b><span>Kirim dan beri izin</span></div>
-      </div>
-      <button class="submit" type="button" id="backButton">← Kembali ke Absensi</button>
-    </div>
-  </section>
-
-  <section id="tentang" class="hidden">
-    <div class="section-title"><h2>Tentang HadirYuk</h2></div>
-    <div class="card">
-      <div style="font-size:35px">💜</div>
-      <h3>Absensi Kelas 9E</h3>
-      <p style="font-size:13px;line-height:1.8;color:#887993">HadirYuk membantu pencatatan kehadiran siswa melalui formulir digital. Data dikirim melalui email setelah proses lokasi dan kamera berhasil.</p>
-      <button class="submit" type="button" id="aboutBack">Kembali ke Absensi</button>
-    </div>
-  </section>
-
-  <footer class="footer">HadirYuk · Absensi Kelas 9E<br>Gunakan dengan jujur dan bertanggung jawab.</footer>
 </main>
 
-<nav class="nav">
-  <button class="active" data-page="beranda"><span class="navico">⌂</span>Absensi</button>
-  <button data-page="panduan"><span class="navico">☷</span>Panduan</button>
-  <button data-page="tentang"><span class="navico">♡</span>Tentang</button>
-</nav>
+<footer>Absensi Kelas 9E · HadirYuk</footer>
 
 <script>
+/* ================================
+   KONFIGURASI EMAILJS
+   Isi sesuai akun dan template kamu.
+================================ */
 const EMAILJS_PUBLIC_KEY = "A607Op6M2VN9lRsLi";
 const EMAILJS_SERVICE_ID = "service_82qgoat";
 const EMAILJS_TEMPLATE_ID = "template_u6zcwpy";
+
+/* KONFIGURASI CLOUDINARY */
 const CLOUDINARY_CLOUD_NAME = "qna1hjte";
 const CLOUDINARY_UPLOAD_PRESET = "absensi_upload";
 
-emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+const $ = id => document.getElementById(id);
 
-const form = document.getElementById("attendanceForm");
-const button = document.getElementById("submitButton");
-const message = document.getElementById("message");
-
-function showMessage(text, type) {
-  message.textContent = text;
-  message.className = "message show " + type;
-}
-
-function showPage(page) {
-  ["form-section", "panduan", "tentang"].forEach(id => {
-    document.getElementById(id).classList.add("hidden");
+function updateClock() {
+  const now = new Date();
+  $("today").textContent = now.toLocaleDateString("id-ID", {
+    day: "2-digit", month: "short", year: "numeric"
   });
-  if (page === "beranda") {
-    document.getElementById("form-section").classList.remove("hidden");
-  } else {
-    document.getElementById(page).classList.remove("hidden");
-  }
-  document.querySelectorAll(".nav button").forEach(btn => {
-    btn.classList.toggle("active", btn.dataset.page === page);
+  $("clock").textContent = now.toLocaleTimeString("id-ID", {
+    hour: "2-digit", minute: "2-digit", second: "2-digit",
+    hour12: false
   });
-  window.scrollTo({ top: 0, behavior: "smooth" });
 }
+updateClock();
+setInterval(updateClock, 1000);
 
-document.querySelectorAll(".nav button").forEach(btn => {
-  btn.addEventListener("click", () => showPage(btn.dataset.page));
+/*
+  Jumlah hadir tidak bisa diketahui dari browser saja.
+  Angka harus dihitung dari database atau data absensi
+  yang tersimpan di server. Jangan menampilkan angka
+  palsu sebagai jumlah hadir.
+*/
+$("presentCount").textContent = "Hubungkan database";
+
+/* Tampilkan kolom alasan untuk izin/sakit */
+document.querySelectorAll('input[name="status"]').forEach(input => {
+  input.addEventListener("change", () => {
+    const needsReason = ["Izin", "Sakit"].includes(input.value)
+      && input.checked;
+
+    const selected = document.querySelector('input[name="status"]:checked');
+    $("reasonWrap").classList.toggle("show",
+      !!selected && ["Izin", "Sakit"].includes(selected.value));
+
+    $("alasan").required = !!selected &&
+      ["Izin", "Sakit"].includes(selected.value);
+  });
 });
-document.getElementById("backButton").addEventListener("click", () => showPage("beranda"));
-document.getElementById("aboutBack").addEventListener("click", () => showPage("beranda"));
 
-function getLocation() {
-  return new Promise((resolve, reject) => {
-    if (!navigator.geolocation) {
-      reject(new Error("Browser tidak mendukung GPS."));
+/* Pratinjau foto */
+function setupPreview(inputId, previewId) {
+  $(inputId).addEventListener("change", event => {
+    const file = event.target.files[0];
+    const preview = $(previewId);
+    if (!file) {
+      preview.style.display = "none";
+      preview.removeAttribute("src");
       return;
     }
+    preview.src = URL.createObjectURL(file);
+    preview.style.display = "block";
+  });
+}
+setupPreview("fotoDepan", "previewDepan");
+setupPreview("fotoBelakang", "previewBelakang");
+
+/* Ambil lokasi GPS */
+function getLocation() {
+  return new Promise(resolve => {
+    if (!navigator.geolocation) {
+      resolve({ lokasi: "GPS tidak didukung", link_lokasi: "" });
+      return;
+    }
+
     navigator.geolocation.getCurrentPosition(
-      pos => resolve({ latitude: pos.coords.latitude, longitude: pos.coords.longitude }),
-      err => {
-        const errors = {
-          1: "Izin lokasi ditolak. Absensi dibatalkan.",
-          2: "Lokasi tidak tersedia. Coba lagi.",
-          3: "GPS terlalu lama merespons. Coba lagi."
-        };
-        reject(new Error(errors[err.code] || "Gagal mendapatkan lokasi."));
+      pos => {
+        const lat = pos.coords.latitude;
+        const lon = pos.coords.longitude;
+        resolve({
+          lokasi: `${lat}, ${lon}`,
+          link_lokasi: `https://www.google.com/maps?q=${lat},${lon}`
+        });
       },
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
+      () => resolve({
+        lokasi: "Lokasi tidak diizinkan",
+        link_lokasi: ""
+      }),
+      { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
     );
   });
 }
 
-async function capturePhoto(facingMode) {
-  if (!navigator.mediaDevices?.getUserMedia) {
-    throw new Error("Kamera tidak didukung. Buka website melalui HTTPS.");
-  }
-  let stream;
-  try {
-    stream = await navigator.mediaDevices.getUserMedia({
-      audio: false,
-      video: {
-        facingMode: { ideal: facingMode },
-        width: { ideal: 1280 },
-        height: { ideal: 720 }
-      }
-    });
+/* Upload foto ke Cloudinary */
+async function uploadPhoto(file) {
+  if (!file) return "";
 
-    const video = document.createElement("video");
-    video.autoplay = true;
-    video.muted = true;
-    video.playsInline = true;
-    video.srcObject = stream;
-
-    await new Promise((resolve, reject) => {
-      let done = false;
-      const timer = setTimeout(() => {
-        if (!done) {
-          done = true;
-          reject(new Error("Kamera terlalu lama merespons."));
-        }
-      }, 12000);
-
-      video.onloadedmetadata = () => {
-        if (!done) {
-          done = true;
-          clearTimeout(timer);
-          resolve();
-        }
-      };
-      video.onerror = () => {
-        if (!done) {
-          done = true;
-          clearTimeout(timer);
-          reject(new Error("Kamera gagal dibuka."));
-        }
-      };
-    });
-
-    await video.play();
-    if (!video.videoWidth || !video.videoHeight) {
-      throw new Error("Gambar kamera tidak tersedia.");
-    }
-
-    const canvas = document.createElement("canvas");
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    const ctx = canvas.getContext("2d");
-    if (!ctx) throw new Error("Gagal memproses foto kamera.");
-    ctx.drawImage(video, 0, 0);
-
-    return await new Promise((resolve, reject) => {
-      canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error("Gagal mengambil foto.")), "image/jpeg", 0.82);
-    });
-  } finally {
-    if (stream) stream.getTracks().forEach(track => track.stop());
-  }
-}
-
-async function uploadPhoto(blob, label) {
   const data = new FormData();
-  data.append("file", blob, label + ".jpg");
+  data.append("file", file);
   data.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
 
   const response = await fetch(
     `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
     { method: "POST", body: data }
   );
-  const result = await response.json();
 
+  const result = await response.json();
   if (!response.ok || !result.secure_url) {
-    throw new Error("Upload foto " + label + " gagal. Periksa konfigurasi Cloudinary.");
+    throw new Error(result.error?.message || "Upload foto gagal.");
   }
   return result.secure_url;
 }
 
-form.addEventListener("submit", async event => {
+/* Kirim absensi melalui EmailJS */
+$("attendanceForm").addEventListener("submit", async event => {
   event.preventDefault();
-  if (button.disabled) return;
 
-  const nama = document.getElementById("nama").value.trim();
-  const selectedStatus = document.querySelector('input[name="status"]:checked');
-  if (!nama || !selectedStatus) {
-    showMessage("Isi nama dan pilih status kehadiran terlebih dahulu.", "error");
+  const button = $("submitBtn");
+  const message = $("message");
+  const selected = document.querySelector('input[name="status"]:checked');
+
+  if (!selected) {
+    message.textContent = "Pilih status kehadiran dulu.";
     return;
   }
 
-  if (!window.isSecureContext) {
-    showMessage("Buka website melalui HTTPS agar GPS dan kamera dapat digunakan.", "error");
+  if (!window.emailjs) {
+    message.textContent =
+      "EmailJS belum dimuat. Periksa koneksi internet dan konfigurasi.";
     return;
   }
 
   button.disabled = true;
+  button.textContent = "Mengirim absensi...";
+  message.textContent = "";
 
   try {
-    showMessage("Meminta izin lokasi GPS...", "info");
-    const location = await getLocation();
+    const nama = $("nama").value.trim();
+    const status = selected.value;
+    const alasan = $("alasan").value.trim();
+    const waktu = new Date().toLocaleTimeString("id-ID");
+    const tanggal = new Date().toLocaleDateString("id-ID");
+    const { lokasi, link_lokasi } = await getLocation();
 
-    showMessage("Membuka kamera depan...", "info");
-    const frontPhoto = await capturePhoto("user");
-
-    showMessage("Membuka kamera belakang...", "info");
-    const backPhoto = await capturePhoto("environment");
-
-    showMessage("Mengunggah foto absensi...", "info");
-    const [fotoDepan, fotoBelakang] = await Promise.all([
-      uploadPhoto(frontPhoto, "depan"),
-      uploadPhoto(backPhoto, "belakang")
+    const [foto_depan, foto_belakang] = await Promise.all([
+      uploadPhoto($("fotoDepan").files[0]),
+      uploadPhoto($("fotoBelakang").files[0])
     ]);
 
-    const now = new Date();
-    const tanggal = now.toLocaleDateString("id-ID", {
-      day: "2-digit", month: "long", year: "numeric"
+    await window.emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+      nama,
+      status,
+      alasan,
+      tanggal,
+      waktu,
+      lokasi,
+      link_lokasi,
+      foto_depan,
+      foto_belakang
     });
-    const waktu = now.toLocaleTimeString("id-ID", {
-      hour: "2-digit", minute: "2-digit", second: "2-digit"
-    });
-    const linkLokasi = `https://www.google.com/maps?q=${location.latitude},${location.longitude}`;
 
-    showMessage("Mengirim data absensi ke email...", "info");
+    message.textContent = "✓ Absensi berhasil dikirim!";
+    message.style.color = "#6d28d9";
+    $("attendanceForm").reset();
+    $("reasonWrap").classList.remove("show");
+    $("alasan").required = false;
 
-    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-      nama: nama,
-      status: selectedStatus.value,
-      tanggal: tanggal,
-      waktu: waktu,
-      lokasi: `${location.latitude}, ${location.longitude}`,
-      link_lokasi: linkLokasi,
-      foto_depan: fotoDepan,
-      foto_belakang: fotoBelakang
+    ["previewDepan", "previewBelakang"].forEach(id => {
+      $(id).style.display = "none";
+      $(id).removeAttribute("src");
     });
-h
-    showMessage("Absensi berhasil dikirim!", "success");
-    form.reset();
   } catch (error) {
-    console.error("Absensi gagal:", error);
-    showMessage(error.message || "Absensi gagal dikirim. Periksa koneksi dan konfigurasi.", "error");
+    console.error(error);
+    message.textContent =
+      "Gagal mengirim absensi: " + (error.message || "Coba lagi.");
+    message.style.color = "#dc2626";
   } finally {
     button.disabled = false;
+    button.textContent = "Kirim Absensi →";
   }
 });
 </script>
+
+<!-- Memuat EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+  emailjs.init({ publicKey: "A607Op6M2VN9lRsLi" });
+</script>
+
 </body>
 </html>
