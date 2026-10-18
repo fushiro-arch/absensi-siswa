@@ -2,239 +2,304 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>HadirYuk - Absensi Siswa</title>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0; padding: 20px;
-      font-family: Arial, sans-serif;
-      background: #f1f5f9; color: #172033;
-    }
-    .card {
-      max-width: 480px; margin: 25px auto; padding: 24px;
-      background: white; border-radius: 18px;
-      box-shadow: 0 8px 30px #0001;
-    }
-    h1 { text-align: center; color: #15803d; }
-    .sub { text-align: center; color: #64748b; }
-    label { display: block; margin: 16px 0 8px; font-weight: bold; }
-    input, select {
-      width: 100%; padding: 13px; font-size: 16px;
-      border: 1px solid #cbd5e1; border-radius: 9px;
-    }
-    .consent {
-      display: flex; gap: 10px; align-items: flex-start;
-      margin: 18px 0; font-size: 14px; line-height: 1.5;
-    }
-    .consent input { width: auto; margin-top: 4px; }
-    button {
-      width: 100%; padding: 14px; border: 0; border-radius: 9px;
-      background: #16a34a; color: white; font-size: 16px;
-      font-weight: bold; cursor: pointer;
-    }
-    button:disabled { opacity: .6; }
-    #statusMsg {
-      margin-top: 16px; padding: 12px; background: #f8fafc;
-      border-radius: 8px; white-space: pre-wrap; overflow-wrap: anywhere;
-    }
-    .small { font-size: 12px; color: #64748b; line-height: 1.5; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#5b35d5">
+<title>Absensi Siswa • HadirYuk</title>
+<style>
+:root{--purple:#5b35d5;--dark:#3d20a8;--pink:#ff4fa3;--ink:#20183b;--muted:#766e8d;--line:#e9e4f6}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(circle at 8% 4%,#ffdbef,transparent 28rem),radial-gradient(circle at 95% 16%,#c9fbf6,transparent 25rem),linear-gradient(135deg,#f7f4ff,#fff8fc 55%,#f1fffd)}
+.wrap{width:min(980px,calc(100% - 28px));margin:auto;padding:28px 0 40px}
+header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:900;font-size:1.1rem}
+.logo{width:44px;height:44px;display:grid;place-items:center;border-radius:15px;color:white;font-size:23px;background:linear-gradient(135deg,var(--purple),var(--pink))}
+.pill{border:1px solid #dcd3f8;background:#fff9;padding:9px 13px;border-radius:999px;color:var(--dark);font-size:.8rem;font-weight:800}
+.hero{border-radius:28px;color:white;padding:clamp(24px,5vw,42px);background:linear-gradient(120deg,#4321b7,#7048e8 58%,#f04d9d);box-shadow:0 20px 50px #5634c42b}
+.eyebrow{font-size:.77rem;letter-spacing:2px;font-weight:900;color:#d9fff9}
+h1{margin:10px 0;font-size:clamp(2rem,6vw,3.4rem);line-height:1.04;letter-spacing:-1.5px}
+.hero p{line-height:1.65;color:#f4efff}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0 22px}
+.stat,.panel{background:#fff;border:1px solid #ece7f8;border-radius:20px;padding:17px;box-shadow:0 10px 30px #35205b0a}
+.stat span{display:block;color:var(--muted);font-size:.8rem;margin-bottom:6px}
+.stat strong{font-size:clamp(.95rem,3vw,1.25rem)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.8fr);gap:18px;align-items:start}
+.panel{border-radius:24px;padding:clamp(18px,3vw,26px)}
+h2{margin:0 0 8px;font-size:1.2rem}
+.sub{color:var(--muted);font-size:.9rem;line-height:1.5;margin:0 0 20px}
+.field-label{display:block;font-size:.88rem;font-weight:800;margin:17px 0 8px}
+input[type=text],input[type=file]{width:100%;border:1.5px solid var(--line);border-radius:13px;padding:13px;font:inherit;background:#fcfbff}
+input[type=file]{font-size:.82rem}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice{display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);padding:13px;border-radius:14px;cursor:pointer;font-weight:800;font-size:.9rem}
+.choice:has(input:checked){border-color:var(--purple);background:#f4f0ff;color:var(--dark)}
+.choice input{accent-color:var(--purple);width:18px;height:18px}
+.hint,.privacy{color:var(--muted);font-size:.79rem;line-height:1.5;margin-top:10px}
+.submit{margin-top:22px;width:100%;border:0;border-radius:14px;padding:15px;color:white;background:linear-gradient(100deg,var(--purple),#8c42df 60%,var(--pink));font:inherit;font-weight:850;cursor:pointer}
+.submit:disabled{opacity:.65;cursor:wait}
+.notice{display:none;margin-top:13px;padding:12px 14px;border-radius:12px;font-size:.88rem;line-height:1.5}
+.notice.show{display:block}.notice.good{background:#e7fbf3;color:#116b4d}.notice.bad{background:#fff0f2;color:#a1263e}
+.list-head{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:13px}
+.count{background:#f0ebff;color:var(--dark);font-weight:900;padding:6px 10px;border-radius:99px;font-size:.8rem}
+.entries{display:grid;gap:10px}
+.entry{border:1px solid var(--line);border-radius:15px;padding:13px;display:grid;grid-template-columns:39px 1fr;gap:10px;align-items:center}
+.avatar{display:grid;place-items:center;width:39px;height:39px;border-radius:13px;background:linear-gradient(135deg,#e8e1ff,#ffe0f0);color:var(--dark);font-weight:900}
+.entry strong{display:block;overflow-wrap:anywhere;font-size:.92rem}
+.entry small{display:block;color:var(--muted);margin-top:4px;line-height:1.45}
+.empty{padding:26px 10px;text-align:center;color:var(--muted);font-size:.9rem;border:1px dashed #dcd3f1;border-radius:15px}
+.foot{text-align:center;color:var(--muted);font-size:.8rem;margin-top:22px;line-height:1.6}
+@media(max-width:720px){.layout{grid-template-columns:1fr}header{align-items:flex-start}.pill{font-size:.7rem}.stats{gap:8px}.stat{padding:12px}}
+@media(max-width:390px){.choices{grid-template-columns:1fr}.brand{font-size:.95rem}}
+</style>
 </head>
 <body>
-  <main class="card">
-    <h1>HadirYuk</h1>
-    <p class="sub">Form Absensi Siswa</p>
+<main class="wrap">
+<header>
+  <div class="brand"><div class="logo">✓</div><span>HadirYuk<span style="color:#f04d9d">.</span></span></div>
+  <div class="pill">● ABSENSI SISWA</div>
+</header>
 
-    <form id="attendanceForm">
-      <label for="nama">Nama siswa</label>
-      <input id="nama" required maxlength="100" placeholder="Nama lengkap">
+<section class="hero">
+  <div class="eyebrow">HALO, SISWA HEBAT! ✨</div>
+  <h1>Absen dulu,<br>baru gas belajar.</h1>
+  <p>Isi nama, pilih status kehadiran, izinkan lokasi, dan ambil dua foto sebagai bukti absensi.</p>
+</section>
 
-      <label for="status">Status kehadiran</label>
-      <select id="status" required>
-        <option value="">Pilih status</option>
-        <option value="Hadir">Hadir</option>
-        <option value="Izin">Izin</option>
-        <option value="Sakit">Sakit</option>
-      </select>
+<section class="stats">
+  <div class="stat"><span>📅 Tanggal hari ini</span><strong id="today">—</strong></div>
+  <div class="stat"><span>🕒 Waktu WIB</span><strong id="clock">—</strong></div>
+  <div class="stat"><span>🙋 Tercatat di perangkat ini</span><strong id="total">0 siswa</strong></div>
+</section>
 
-      <div class="consent">
-        <input type="checkbox" id="consent" required>
-        <span>
-          Saya menyetujui pengambilan foto kamera depan dan belakang
-          untuk dokumentasi absensi. Foto diunggah ke Cloudinary dan
-          tautannya dikirim melalui email.
-        </span>
-      </div>
+<div class="layout">
+<section class="panel">
+  <h2>Form absensi 📝</h2>
+  <p class="sub">Waktu tercatat otomatis mengikuti zona waktu WIB (Asia/Jakarta).</p>
+  <form id="attendanceForm">
+    <label class="field-label" for="studentName">Nama lengkap</label>
+    <input id="studentName" type="text" placeholder="Contoh: Siti Nurhaliza" maxlength="80" autocomplete="name" required>
 
-      <p class="small">
-        Foto hanya diambil setelah tombol ditekan dan izin kamera diberikan.
-        Pastikan penggunaan kamera ini disetujui oleh siswa.
-      </p>
-      <button id="submitBtn" type="submit">Ambil Foto & Kirim Absensi</button>
-    </form>
-
-    <div id="statusMsg" role="status" aria-live="polite">
-      Siap menerima absensi.
+    <label class="field-label">Status kehadiran</label>
+    <div class="choices">
+      <label class="choice"><input type="radio" name="status" value="Hadir" checked required> ✅ Hadir</label>
+      <label class="choice"><input type="radio" name="status" value="Izin"> 📨 Izin</label>
+      <label class="choice"><input type="radio" name="status" value="Sakit"> 🤒 Sakit</label>
+      <label class="choice"><input type="radio" name="status" value="Alpa"> ❌ Alpa</label>
     </div>
-  </main>
 
+    <label class="field-label">📍 Izin lokasi GPS</label>
+    <label class="choice"><input id="locationConsent" type="checkbox" required> Saya setuju membagikan lokasi untuk absensi</label>
+
+    <label class="field-label" for="fotoDepan">📸 Foto depan / selfie</label>
+    <input id="fotoDepan" type="file" accept="image/*" capture="user" required>
+
+    <label class="field-label" for="fotoBelakang">📷 Foto belakang</label>
+    <input id="fotoBelakang" type="file" accept="image/*" capture="environment" required>
+
+    <p class="hint">Foto dan lokasi dikirim ke email penerima absensi. Tautan foto tidak ditampilkan di website.</p>
+    <button class="submit" type="submit">Kirim Absensi →</button>
+    <div id="notice" class="notice" role="status" aria-live="polite"></div>
+  </form>
+  <p class="privacy">Riwayat di samping disimpan lokal pada browser ini. Daftar tidak otomatis dibagikan ke semua perangkat.</p>
+</section>
+
+<section class="panel">
+  <div class="list-head"><h2>Kiriman terbaru 📋</h2><span class="count" id="countBadge">0</span></div>
+  <p class="sub">Daftar lokal pada perangkat ini, urut dari yang terbaru.</p>
+  <div id="entries" class="entries"><div class="empty">Belum ada absensi.<br>Jadilah yang pertama!</div></div>
+</section>
+</div>
+<footer class="foot">HadirYuk © <span id="year"></span> · Dibuat untuk membantu kelas lebih tertib 💜<br>Jam menggunakan zona waktu WIB (UTC+7).</footer>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-  // KONFIGURASI EMAILJS
-  const EMAILJS_PUBLIC_KEY = "A607Op6M2VN9lRsLi";
-  const EMAILJS_SERVICE_ID = "service_82qgoat";
-  const EMAILJS_TEMPLATE_ID = "template_u6zcwpy";
+const $ = id => document.getElementById(id);
 
-  // KONFIGURASI CLOUDINARY
-  const CLOUD_NAME = "qna1hjte";
-  const UPLOAD_PRESET = "absensi_upload";
+// EmailJS
+const EMAILJS_PUBLIC_KEY = "A607Op6M2VN9lRsLi";
+const EMAILJS_SERVICE_ID = "service_82qgoat";
+const EMAILJS_TEMPLATE_ID = "template_u6zcwpy";
+if (window.emailjs) emailjs.init({publicKey: EMAILJS_PUBLIC_KEY});
 
-  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+// Cloudinary
+const CLOUDINARY_CLOUD_NAME = "qna1hjte";
+const CLOUDINARY_UPLOAD_PRESET = "absensi_upload";
 
-  const form = document.getElementById("attendanceForm");
-  const button = document.getElementById("submitBtn");
-  const message = document.getElementById("statusMsg");
+const storageKey = "hadiryuk_absensi_v1";
+const dateFormatter = new Intl.DateTimeFormat("id-ID", {
+  timeZone:"Asia/Jakarta", weekday:"long", day:"numeric", month:"long", year:"numeric"
+});
+const timeFormatter = new Intl.DateTimeFormat("id-ID", {
+  timeZone:"Asia/Jakarta", hour:"2-digit", minute:"2-digit", second:"2-digit", hour12:false
+});
+const stampFormatter = new Intl.DateTimeFormat("id-ID", {
+  timeZone:"Asia/Jakarta", day:"2-digit", month:"short", year:"numeric",
+  hour:"2-digit", minute:"2-digit", second:"2-digit", hour12:false
+});
 
-  function setMessage(text) {
-    message.textContent = text;
+function updateDateTime(){
+  const now = new Date();
+  $("today").textContent = dateFormatter.format(now);
+  $("clock").textContent = timeFormatter.format(now) + " WIB";
+  $("year").textContent = new Intl.DateTimeFormat("id-ID", {
+    timeZone:"Asia/Jakarta", year:"numeric"
+  }).format(now);
+}
+function loadEntries(){
+  try {
+    const data = JSON.parse(localStorage.getItem(storageKey) || "[]");
+    return Array.isArray(data) ? data : [];
+  } catch (_) { return []; }
+}
+function renderEntries(){
+  const entries = loadEntries();
+  $("total").textContent = entries.length + " siswa";
+  $("countBadge").textContent = entries.length;
+  const root = $("entries");
+  root.replaceChildren();
+  if (!entries.length) {
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = "Belum ada absensi.";
+    root.appendChild(empty);
+    return;
   }
-
-  function getDateTime() {
-    const now = new Date();
-    return {
-      tanggal: now.toLocaleDateString("id-ID", {
-        day: "2-digit", month: "long", year: "numeric",
-        timeZone: "Asia/Jakarta"
-      }),
-      waktu: now.toLocaleTimeString("id-ID", {
-        hour: "2-digit", minute: "2-digit", second: "2-digit",
-        timeZone: "Asia/Jakarta"
-      }) + " WIB"
-    };
-  }
-
-  async function capturePhoto(facingMode) {
-    if (!navigator.mediaDevices?.getUserMedia) {
-      throw new Error("Kamera tidak tersedia. Buka website melalui HTTPS di browser yang mendukung kamera.");
-    }
-
-    let stream;
-    try {
-      stream = await navigator.mediaDevices.getUserMedia({
-        audio: false,
-        video: {
-          facingMode: { exact: facingMode },
-          width: { ideal: 1280 },
-          height: { ideal: 720 }
-        }
-      });
-    } catch (err) {
-      if (err.name === "NotFoundError" ||
-          err.name === "OverconstrainedError") {
-        throw new Error(
-          facingMode === "user"
-            ? "Kamera depan tidak ditemukan."
-            : "Kamera belakang tidak ditemukan."
-        );
-      }
-      throw err;
-    }
-
-    try {
-      const video = document.createElement("video");
-      video.autoplay = true;
-      video.playsInline = true;
-      video.muted = true;
-      video.srcObject = stream;
-      await video.play();
-
-      await new Promise(resolve => {
-        if (video.videoWidth > 0) return resolve();
-        video.onloadedmetadata = resolve;
-      });
-
-      const canvas = document.createElement("canvas");
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      canvas.getContext("2d").drawImage(
-        video, 0, 0, canvas.width, canvas.height
-      );
-
-      return await new Promise((resolve, reject) => {
-        canvas.toBlob(blob => {
-          if (blob) resolve(blob);
-          else reject(new Error("Gagal membuat file foto."));
-        }, "image/jpeg", 0.85);
-      });
-    } finally {
-      stream.getTracks().forEach(track => track.stop());
-    }
-  }
-
-  async function uploadPhoto(blob, filename) {
-    const data = new FormData();
-    data.append("file", blob, filename);
-    data.append("upload_preset", UPLOAD_PRESET);
-    data.append("folder", "absensi-siswa");
-
-    const response = await fetch(
-      `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
-      { method: "POST", body: data }
-    );
-
-    const result = await response.json();
-    if (!response.ok || !result.secure_url) {
-      throw new Error(result.error?.message || "Upload foto ke Cloudinary gagal.");
-    }
-    return result.secure_url;
-  }
-
-  form.addEventListener("submit", async event => {
-    event.preventDefault();
-    if (!form.reportValidity()) return;
-
-    button.disabled = true;
-
-    try {
-      setMessage("Meminta izin dan mengambil foto kamera depan...");
-      const frontPhoto = await capturePhoto("user");
-
-      setMessage("Mengunggah foto depan ke Cloudinary...");
-      const frontUrl = await uploadPhoto(frontPhoto, "foto-depan.jpg");
-
-      setMessage("Mengambil foto kamera belakang...");
-      const rearPhoto = await capturePhoto("environment");
-
-      setMessage("Mengunggah foto belakang ke Cloudinary...");
-      const rearUrl = await uploadPhoto(rearPhoto, "foto-belakang.jpg");
-
-      const { tanggal, waktu } = getDateTime();
-
-      setMessage("Mengirim data absensi ke Gmail...");
-      await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        nama: document.getElementById("nama").value.trim(),
-        status: document.getElementById("status").value,
-        tanggal,
-        waktu,
-        foto_depan: frontUrl,
-        foto_belakang: rearUrl
-      });
-
-      setMessage(
-        "Absensi berhasil dikirim!\n\n" +
-        "Foto depan: " + frontUrl + "\n\n" +
-        "Foto belakang: " + rearUrl
-      );
-      form.reset();
-    } catch (err) {
-      console.error(err);
-      setMessage("Gagal mengirim absensi: " + err.message);
-    } finally {
-      button.disabled = false;
-    }
+  entries.slice(0,30).forEach(item => {
+    const card = document.createElement("article");
+    card.className = "entry";
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    avatar.textContent = (item.name || "?").trim().charAt(0).toUpperCase();
+    const info = document.createElement("div");
+    const name = document.createElement("strong");
+    name.textContent = item.name;
+    const detail = document.createElement("small");
+    detail.textContent = item.status + " · " + item.time + " WIB";
+    info.append(name,detail);
+    card.append(avatar,info);
+    root.appendChild(card);
   });
+}
+
+function getDeviceLocation(){
+  return new Promise((resolve,reject)=>{
+    if (!navigator.geolocation) {
+      reject(new Error("Browser tidak mendukung GPS."));
+      return;
+    }
+    navigator.geolocation.getCurrentPosition(
+      position => resolve(position.coords),
+      () => reject(new Error("Lokasi gagal didapat. Aktifkan GPS dan izinkan akses lokasi, lalu coba lagi.")),
+      {enableHighAccuracy:true,timeout:20000,maximumAge:0}
+    );
+  });
+}
+
+async function uploadFoto(file){
+  const data = new FormData();
+  data.append("file",file);
+  data.append("upload_preset",CLOUDINARY_UPLOAD_PRESET);
+  const response = await fetch(
+    `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
+    {method:"POST",body:data}
+  );
+  const result = await response.json();
+  if (!response.ok || !result.secure_url) {
+    throw new Error("Upload foto gagal. Periksa upload preset Cloudinary.");
+  }
+  return result.secure_url;
+}
+
+$("attendanceForm").addEventListener("submit",async event=>{
+  event.preventDefault();
+  const name = $("studentName").value.trim().replace(/\s+/g," ");
+  const status = document.querySelector('input[name="status"]:checked')?.value;
+  const depan = $("fotoDepan").files[0];
+  const belakang = $("fotoBelakang").files[0];
+  const notice = $("notice");
+  const button = $("attendanceForm").querySelector('button[type="submit"]');
+
+  if (!name || !status || !$("locationConsent").checked || !depan || !belakang) {
+    notice.className = "notice show bad";
+    notice.textContent = "Lengkapi nama, status, persetujuan GPS, dan kedua foto.";
+    return;
+  }
+  if (!window.emailjs) {
+    notice.className = "notice show bad";
+    notice.textContent = "EmailJS belum termuat. Periksa koneksi internet.";
+    return;
+  }
+
+  const now = new Date();
+  const entries = loadEntries();
+  const todayKey = new Intl.DateTimeFormat("en-CA",{
+    timeZone:"Asia/Jakarta",year:"numeric",month:"2-digit",day:"2-digit"
+  }).format(now);
+
+  if (entries.some(item=>item.dayKey===todayKey &&
+    item.name.toLocaleLowerCase("id-ID")===name.toLocaleLowerCase("id-ID"))) {
+    notice.className = "notice show bad";
+    notice.textContent = "Nama ini sudah mengirim absensi hari ini di browser ini.";
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "Memproses...";
+  try {
+    notice.className = "notice show";
+    notice.textContent = "Mengambil lokasi GPS... Izinkan akses saat browser bertanya.";
+    const coords = await getDeviceLocation();
+    const mapsLink = `https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`;
+
+    notice.textContent = "Mengunggah kedua foto...";
+    const [fotoDepanUrl,fotoBelakangUrl] = await Promise.all([
+      uploadFoto(depan), uploadFoto(belakang)
+    ]);
+
+    const formattedDate = dateFormatter.format(now);
+    const formattedTime = stampFormatter.format(now);
+
+    notice.textContent = "Mengirim absensi ke Gmail...";
+    await emailjs.send(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,{
+      nama:name,
+      status:status,
+      tanggal:formattedDate,
+      waktu:formattedTime,
+      lokasi:`${coords.latitude}, ${coords.longitude}`,
+      link_lokasi:mapsLink,
+      latitude:coords.latitude,
+      longitude:coords.longitude,
+      akurasi_lokasi:Math.round(coords.accuracy)+" meter",
+      foto_depan:fotoDepanUrl,
+      foto_belakang:fotoBelakangUrl,
+      title:"Absensi Siswa - "+name+" - "+formattedDate,
+      name:name
+    });
+
+    entries.unshift({name,status,dayKey:todayKey,time:formattedTime});
+    localStorage.setItem(storageKey,JSON.stringify(entries));
+    renderEntries();
+
+    notice.className = "notice show good";
+    notice.textContent = "Absensi berhasil dikirim ke email pada "+formattedTime+" WIB. Terima kasih, "+name+"!";
+    $("studentName").value = "";
+    $("fotoDepan").value = "";
+    $("fotoBelakang").value = "";
+    $("locationConsent").checked = false;
+  } catch (error) {
+    console.error(error);
+    notice.className = "notice show bad";
+    notice.textContent = error.message || "Gagal mengirim absensi. Periksa koneksi dan pengaturan layanan.";
+  } finally {
+    button.disabled = false;
+    button.textContent = "Kirim Absensi →";
+  }
+});
+
+updateDateTime();
+renderEntries();
+setInterval(updateDateTime,1000);
 </script>
 </body>
 </html>
