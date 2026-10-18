@@ -2,274 +2,261 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Absensi Siswa</title>
-
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      padding: 20px;
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #101827, #182b46);
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 430px;
-      padding: 28px;
-      background: #fff;
-      color: #172033;
-      border-radius: 20px;
-      box-shadow: 0 15px 40px #0005;
-    }
-
-    h1 {
-      text-align: center;
-      margin: 0 0 8px;
-      font-size: 27px;
-    }
-
-    .subtitle {
-      text-align: center;
-      color: #64748b;
-      margin-bottom: 25px;
-      font-size: 14px;
-    }
-
-    label {
-      display: block;
-      margin: 16px 0 8px;
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    input, select {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #cbd5e1;
-      border-radius: 10px;
-      font-size: 15px;
-      background: #fff;
-      color: #172033;
-    }
-
-    input:focus, select:focus {
-      outline: 2px solid #93c5fd;
-      border-color: #2563eb;
-    }
-
-    button {
-      width: 100%;
-      padding: 14px;
-      margin-top: 23px;
-      background: #2563eb;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    #pesan {
-      display: none;
-      padding: 12px;
-      margin-top: 16px;
-      border-radius: 9px;
-      font-size: 14px;
-      overflow-wrap: anywhere;
-    }
-
-    .sukses {
-      display: block !important;
-      background: #dcfce7;
-      color: #166534;
-    }
-
-    .gagal {
-      display: block !important;
-      background: #fee2e2;
-      color: #991b1b;
-    }
-
-    .footer {
-      margin-top: 20px;
-      text-align: center;
-      color: #64748b;
-      font-size: 12px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Absensi Siswa - HadirYuk</title>
+<style>
+:root{--purple:#5b35d5;--pink:#ff4fa3;--ink:#20183b;--muted:#766e8d;--line:#e9e4f6}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(circle at 8% 4%,#ffdbef,transparent 28rem),radial-gradient(circle at 95% 16%,#c9fbf6,transparent 25rem),linear-gradient(135deg,#f7f4ff,#fff8fc 55%,#f1fffd)}
+.wrap{width:min(980px,calc(100% - 28px));margin:auto;padding:28px 0 40px}
+header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px}
+.brand{font-weight:900;font-size:1.2rem}
+.pill{border:1px solid #dcd3f8;background:#fff9;padding:9px 13px;border-radius:999px;color:#3d20a8;font-size:.8rem;font-weight:800}
+.hero{border-radius:28px;color:white;padding:clamp(24px,5vw,42px);background:linear-gradient(120deg,#4321b7,#7048e8 58%,#f04d9d)}
+.eyebrow{font-size:.77rem;letter-spacing:2px;font-weight:900;color:#d9fff9}
+h1{margin:10px 0;font-size:clamp(2rem,6vw,3.4rem);line-height:1.05}
+.hero p{line-height:1.65}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0 22px}
+.stat,.panel{background:white;border:1px solid #ece7f8;border-radius:20px;padding:16px}
+.stat span{display:block;color:var(--muted);font-size:.8rem;margin-bottom:6px}
+.stat strong{font-size:1rem}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.8fr);gap:18px;align-items:start}
+.panel h2{margin:0 0 8px;font-size:1.25rem}
+.sub{color:var(--muted);font-size:.9rem;line-height:1.5;margin-bottom:20px}
+.field-label{display:block;font-size:.88rem;font-weight:800;margin:17px 0 8px}
+input[type=text]{width:100%;border:1.5px solid var(--line);border-radius:13px;padding:14px;font:inherit;background:#fcfbff}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.choice{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);padding:13px;border-radius:14px;cursor:pointer;font-weight:800;font-size:.9rem}
+.choice:has(input:checked){border-color:var(--purple);background:#f4f0ff;color:#3d20a8}
+.choice input{accent-color:var(--purple)}
+.hint,.privacy{color:var(--muted);font-size:.8rem;line-height:1.5}
+button{border:0;cursor:pointer;font:inherit;font-weight:850;border-radius:14px;padding:14px 17px}
+.submit{margin-top:18px;width:100%;color:white;background:linear-gradient(100deg,var(--purple),#8c42df 60%,var(--pink))}
+button:disabled{opacity:.65;cursor:wait}
+.notice{display:none;margin-top:13px;padding:12px;border-radius:12px;font-size:.88rem;line-height:1.5}
+.notice.show{display:block}
+.notice.good{background:#e7fbf3;color:#116b4d}
+.notice.bad{background:#fff0f2;color:#a1263e}
+.list-head{display:flex;justify-content:space-between;align-items:center}
+.count{background:#f0ebff;color:#3d20a8;padding:6px 10px;border-radius:99px;font-weight:900}
+.entries{display:grid;gap:10px}
+.entry{border:1px solid var(--line);border-radius:15px;padding:13px;display:flex;gap:10px;align-items:center}
+.avatar{display:grid;place-items:center;min-width:39px;height:39px;border-radius:13px;background:#e8e1ff;color:#3d20a8;font-weight:900}
+.entry strong,.entry small{display:block;overflow-wrap:anywhere}
+.entry small{color:var(--muted);margin-top:4px}
+.empty{padding:26px 10px;text-align:center;color:var(--muted);border:1px dashed #dcd3f1;border-radius:15px}
+.foot{text-align:center;color:var(--muted);font-size:.8rem;margin-top:22px;line-height:1.6}
+@media(max-width:720px){.layout{grid-template-columns:1fr}.stats{gap:8px}.stat{padding:12px}.pill{font-size:.7rem}}
+@media(max-width:390px){.choices{grid-template-columns:1fr}}
+</style>
 </head>
-
 <body>
-  <main class="container">
-    <h1>📚 Absensi Siswa</h1>
-    <p class="subtitle">Formulir kehadiran siswa</p>
+<main class="wrap">
+<header>
+<div class="brand">✓ HadirYuk<span style="color:#f04d9d">.</span></div>
+<div class="pill">● ABSENSI SISWA</div>
+</header>
 
-    <form id="formAbsensi">
-      <label for="nama">Nama Siswa</label>
-      <input
-        type="text"
-        id="nama"
-        name="nama"
-        placeholder="Masukkan nama lengkap"
-        required
-        maxlength="100"
-      >
+<section class="hero">
+<div class="eyebrow">HALO, SISWA HEBAT! ✨</div>
+<h1>Absen dulu,<br>baru gas belajar.</h1>
+<p>Isi nama, pilih status kehadiran, lalu kirim absensi. Pastikan nama dan statusmu sudah benar!</p>
+</section>
 
-      <label for="status">Status Kehadiran</label>
-      <select id="status" name="status" required>
-        <option value="">-- Pilih Kehadiran --</option>
-        <option value="Hadir">Hadir</option>
-        <option value="Izin">Izin</option>
-        <option value="Sakit">Sakit</option>
-        <option value="Alpa">Alpa</option>
-      </select>
+<section class="stats">
+<div class="stat"><span>📅 Tanggal hari ini</span><strong id="today">—</strong></div>
+<div class="stat"><span>🕒 Waktu WIB</span><strong id="clock">—</strong></div>
+<div class="stat"><span>🙋 Tercatat di perangkat ini</span><strong id="total">0 siswa</strong></div>
+</section>
 
-      <label for="tanggal">Tanggal</label>
-      <input
-        type="date"
-        id="tanggal"
-        name="tanggal"
-        required
-      >
+<div class="layout">
+<section class="panel">
+<h2>Form absensi 📝</h2>
+<p class="sub">Waktu dicatat otomatis mengikuti jam WIB.</p>
+<form id="attendanceForm">
+<label class="field-label" for="studentName">Nama lengkap</label>
+<input id="studentName" name="studentName" type="text" placeholder="Contoh: Siti Nurhaliza" maxlength="80" required>
 
-      <label for="waktu">Waktu</label>
-      <input
-        type="text"
-        id="waktu"
-        name="waktu"
-        readonly
-      >
+<label class="field-label">Status kehadiran</label>
+<div class="choices">
+<label class="choice"><input type="radio" name="status" value="Hadir" required checked> ✅ Hadir</label>
+<label class="choice"><input type="radio" name="status" value="Izin"> 📨 Izin</label>
+<label class="choice"><input type="radio" name="status" value="Sakit"> 🤒 Sakit</label>
+<label class="choice"><input type="radio" name="status" value="Alpa"> ❌ Alpa</label>
+</div>
+<p class="hint">Pilih satu status sesuai keadaanmu.</p>
+<button class="submit" type="submit">Kirim Absensi →</button>
+<div id="notice" class="notice" role="status" aria-live="polite"></div>
+</form>
+<p class="privacy">Data daftar terbaru tersimpan di browser perangkat ini.</p>
+</section>
 
-      <button type="submit" id="tombolKirim">
-        Kirim Absensi
-      </button>
+<section class="panel">
+<div class="list-head"><h2>Kiriman terbaru 📋</h2><span class="count" id="countBadge">0</span></div>
+<p class="sub">Daftar lokal pada perangkat ini.</p>
+<div id="entries" class="entries"><div class="empty">Belum ada absensi.<br>Jadilah yang pertama!</div></div>
+</section>
+</div>
 
-      <div id="pesan" role="status" aria-live="polite"></div>
-    </form>
+<footer class="foot">HadirYuk © <span id="year"></span><br>Jam menggunakan zona waktu WIB (UTC+7).</footer>
+</main>
 
-    <div class="footer">
-      Sistem Absensi Siswa
-    </div>
-  </main>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script>
+const $ = id => document.getElementById(id);
 
-  <script>
-    // ===== KONFIGURASI EMAILJS =====
+// Konfigurasi EmailJS
+const EMAILJS_PUBLIC_KEY = "A607Op6M2VN9lRsLi";
+const EMAILJS_SERVICE_ID = "service_82qgoat";
+const EMAILJS_TEMPLATE_ID = "template_u6zcwpy";
 
-    const PUBLIC_KEY = "A607Op6M2VN9lRsLi";
+emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
 
-    // GANTI dengan Service ID milik lu dari dashboard EmailJS
-    const SERVICE_ID = "service_82qgoat";
+const storageKey = "hadiryuk_absensi_v1";
+const dateFormatter = new Intl.DateTimeFormat("id-ID", {
+  timeZone:"Asia/Jakarta",
+  weekday:"long",day:"numeric",month:"long",year:"numeric"
+});
+const timeFormatter = new Intl.DateTimeFormat("id-ID", {
+  timeZone:"Asia/Jakarta",hour:"2-digit",minute:"2-digit",
+  second:"2-digit",hour12:false
+});
+const stampFormatter = new Intl.DateTimeFormat("id-ID", {
+  timeZone:"Asia/Jakarta",day:"2-digit",month:"short",year:"numeric",
+  hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false
+});
 
-    const TEMPLATE_ID = "template_u6zcwpy";
+function updateDateTime(){
+  const now = new Date();
+  $("today").textContent = dateFormatter.format(now);
+  $("clock").textContent = timeFormatter.format(now)+" WIB";
+  $("year").textContent = new Intl.DateTimeFormat("id-ID",{
+    timeZone:"Asia/Jakarta",year:"numeric"
+  }).format(now);
+}
 
-    emailjs.init({
-      publicKey: PUBLIC_KEY
+function loadEntries(){
+  try {
+    const data = JSON.parse(localStorage.getItem(storageKey)||"[]");
+    return Array.isArray(data)?data:[];
+  } catch(error) {
+    return [];
+  }
+}
+
+function renderEntries(){
+  const entries = loadEntries();
+  $("total").textContent = entries.length+" siswa";
+  $("countBadge").textContent = entries.length;
+  const root = $("entries");
+  root.replaceChildren();
+
+  if(!entries.length){
+    const empty = document.createElement("div");
+    empty.className = "empty";
+    empty.textContent = "Belum ada absensi.";
+    root.appendChild(empty);
+    return;
+  }
+
+  entries.slice(0,30).forEach(item=>{
+    const card = document.createElement("article");
+    card.className = "entry";
+
+    const avatar = document.createElement("div");
+    avatar.className = "avatar";
+    avatar.textContent = (item.name||"?").charAt(0).toUpperCase();
+
+    const info = document.createElement("div");
+    const name = document.createElement("strong");
+    name.textContent = item.name;
+
+    const detail = document.createElement("small");
+    detail.textContent = item.status+" · "+item.time+" WIB";
+
+    info.append(name,detail);
+    card.append(avatar,info);
+    root.appendChild(card);
+  });
+}
+
+$("attendanceForm").addEventListener("submit", async event=>{
+  event.preventDefault();
+
+  const name = $("studentName").value.trim().replace(/\s+/g," ");
+  const status = document.querySelector('input[name="status"]:checked')?.value;
+  const notice = $("notice");
+  const button = $("attendanceForm").querySelector('button[type="submit"]');
+
+  if(!name||!status){
+    notice.className = "notice show bad";
+    notice.textContent = "Isi nama dan pilih status kehadiran terlebih dahulu.";
+    return;
+  }
+
+  const now = new Date();
+  const todayKey = new Intl.DateTimeFormat("en-CA",{
+    timeZone:"Asia/Jakarta",year:"numeric",month:"2-digit",day:"2-digit"
+  }).format(now);
+
+  const entries = loadEntries();
+  const duplicate = entries.some(item=>
+    item.dayKey===todayKey &&
+    item.name.toLocaleLowerCase("id-ID")===name.toLocaleLowerCase("id-ID")
+  );
+
+  if(duplicate){
+    notice.className = "notice show bad";
+    notice.textContent = "Nama ini sudah mengirim absensi hari ini di browser ini.";
+    return;
+  }
+
+  const tanggal = dateFormatter.format(now);
+  const waktu = stampFormatter.format(now);
+
+  notice.className = "notice show";
+  notice.textContent = "Sedang mengirim absensi ke email...";
+  button.disabled = true;
+  button.textContent = "Mengirim...";
+
+  try {
+    await emailjs.send(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,{
+      nama:name,
+      status:status,
+      tanggal:tanggal,
+      waktu:waktu,
+      title:"Absensi Siswa Baru - "+tanggal,
+      name:name
     });
+  } catch(error) {
+    console.error("EmailJS error:",error);
+    notice.className = "notice show bad";
+    notice.textContent = "Email gagal dikirim. Periksa Service ID, Template ID, Public Key, dan pengaturan template EmailJS.";
+    button.disabled = false;
+    button.textContent = "Kirim Absensi →";
+    return;
+  }
 
-    // ===== TANGGAL DAN WAKTU WIB =====
+  entries.unshift({name,status,dayKey:todayKey,time:waktu});
+  try {
+    localStorage.setItem(storageKey,JSON.stringify(entries));
+  } catch(error) {
+    console.error("Penyimpanan lokal gagal:",error);
+  }
 
-    function perbaruiWaktu() {
-      const sekarang = new Date();
+  renderEntries();
+  notice.className = "notice show good";
+  notice.textContent = "Absensi berhasil dikirim ke email pada "+waktu+" WIB. Terima kasih, "+name+"!";
+  $("studentName").value = "";
+  button.disabled = false;
+  button.textContent = "Kirim Absensi →";
+});
 
-      const tanggal = new Intl.DateTimeFormat("en-CA", {
-        timeZone: "Asia/Jakarta",
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit"
-      }).format(sekarang);
-
-      const waktu = new Intl.DateTimeFormat("id-ID", {
-        timeZone: "Asia/Jakarta",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: false
-      }).format(sekarang);
-
-      document.getElementById("tanggal").value = tanggal;
-      document.getElementById("waktu").value =
-        waktu + " WIB";
-    }
-
-    perbaruiWaktu();
-    setInterval(perbaruiWaktu, 1000);
-
-    // ===== KIRIM ABSENSI KE EMAIL =====
-
-    const form = document.getElementById("formAbsensi");
-    const tombol = document.getElementById("tombolKirim");
-    const pesan = document.getElementById("pesan");
-
-    form.addEventListener("submit", async function(event) {
-      event.preventDefault();
-
-      if (SERVICE_ID === "service_82qgoat") {
-        pesan.className = "gagal";
-        pesan.textContent =
-          "Service ID EmailJS belum diisi. Periksa konfigurasi kode.";
-        return;
-      }
-
-      if (!form.reportValidity()) return;
-
-      tombol.disabled = true;
-      tombol.textContent = "Mengirim...";
-      pesan.className = "";
-      pesan.style.display = "none";
-
-      const data = {
-        nama: document.getElementById("nama").value.trim(),
-        status: document.getElementById("status").value,
-        tanggal: document.getElementById("tanggal").value,
-        waktu: document.getElementById("waktu").value
-      };
-
-      try {
-        await emailjs.send(
-          SERVICE_ID,
-          TEMPLATE_ID,
-          data
-        );
-
-        pesan.className = "sukses";
-        pesan.textContent =
-          "Absensi berhasil dikirim! Terima kasih.";
-
-        form.reset();
-        perbaruiWaktu();
-
-      } catch (error) {
-        console.error("EmailJS error:", error);
-
-        pesan.className = "gagal";
-        pesan.textContent =
-          "Absensi gagal dikirim. Periksa Service ID, Template ID, dan konfigurasi EmailJS.";
-
-      } finally {
-        tombol.disabled = false;
-        tombol.textContent = "Kirim Absensi";
-      }
-    });
-  </script>
+updateDateTime();
+renderEntries();
+setInterval(updateDateTime,1000);
+</script>
 </body>
-  </html>
-                                     
+                                    </html>
+                                    
