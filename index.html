@@ -2,261 +2,277 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Absensi Siswa - HadirYuk</title>
-<style>
-:root{--purple:#5b35d5;--pink:#ff4fa3;--ink:#20183b;--muted:#766e8d;--line:#e9e4f6}
-*{box-sizing:border-box}
-body{margin:0;min-height:100vh;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(circle at 8% 4%,#ffdbef,transparent 28rem),radial-gradient(circle at 95% 16%,#c9fbf6,transparent 25rem),linear-gradient(135deg,#f7f4ff,#fff8fc 55%,#f1fffd)}
-.wrap{width:min(980px,calc(100% - 28px));margin:auto;padding:28px 0 40px}
-header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:24px}
-.brand{font-weight:900;font-size:1.2rem}
-.pill{border:1px solid #dcd3f8;background:#fff9;padding:9px 13px;border-radius:999px;color:#3d20a8;font-size:.8rem;font-weight:800}
-.hero{border-radius:28px;color:white;padding:clamp(24px,5vw,42px);background:linear-gradient(120deg,#4321b7,#7048e8 58%,#f04d9d)}
-.eyebrow{font-size:.77rem;letter-spacing:2px;font-weight:900;color:#d9fff9}
-h1{margin:10px 0;font-size:clamp(2rem,6vw,3.4rem);line-height:1.05}
-.hero p{line-height:1.65}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0 22px}
-.stat,.panel{background:white;border:1px solid #ece7f8;border-radius:20px;padding:16px}
-.stat span{display:block;color:var(--muted);font-size:.8rem;margin-bottom:6px}
-.stat strong{font-size:1rem}
-.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.8fr);gap:18px;align-items:start}
-.panel h2{margin:0 0 8px;font-size:1.25rem}
-.sub{color:var(--muted);font-size:.9rem;line-height:1.5;margin-bottom:20px}
-.field-label{display:block;font-size:.88rem;font-weight:800;margin:17px 0 8px}
-input[type=text]{width:100%;border:1.5px solid var(--line);border-radius:13px;padding:14px;font:inherit;background:#fcfbff}
-.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.choice{display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);padding:13px;border-radius:14px;cursor:pointer;font-weight:800;font-size:.9rem}
-.choice:has(input:checked){border-color:var(--purple);background:#f4f0ff;color:#3d20a8}
-.choice input{accent-color:var(--purple)}
-.hint,.privacy{color:var(--muted);font-size:.8rem;line-height:1.5}
-button{border:0;cursor:pointer;font:inherit;font-weight:850;border-radius:14px;padding:14px 17px}
-.submit{margin-top:18px;width:100%;color:white;background:linear-gradient(100deg,var(--purple),#8c42df 60%,var(--pink))}
-button:disabled{opacity:.65;cursor:wait}
-.notice{display:none;margin-top:13px;padding:12px;border-radius:12px;font-size:.88rem;line-height:1.5}
-.notice.show{display:block}
-.notice.good{background:#e7fbf3;color:#116b4d}
-.notice.bad{background:#fff0f2;color:#a1263e}
-.list-head{display:flex;justify-content:space-between;align-items:center}
-.count{background:#f0ebff;color:#3d20a8;padding:6px 10px;border-radius:99px;font-weight:900}
-.entries{display:grid;gap:10px}
-.entry{border:1px solid var(--line);border-radius:15px;padding:13px;display:flex;gap:10px;align-items:center}
-.avatar{display:grid;place-items:center;min-width:39px;height:39px;border-radius:13px;background:#e8e1ff;color:#3d20a8;font-weight:900}
-.entry strong,.entry small{display:block;overflow-wrap:anywhere}
-.entry small{color:var(--muted);margin-top:4px}
-.empty{padding:26px 10px;text-align:center;color:var(--muted);border:1px dashed #dcd3f1;border-radius:15px}
-.foot{text-align:center;color:var(--muted);font-size:.8rem;margin-top:22px;line-height:1.6}
-@media(max-width:720px){.layout{grid-template-columns:1fr}.stats{gap:8px}.stat{padding:12px}.pill{font-size:.7rem}}
-@media(max-width:390px){.choices{grid-template-columns:1fr}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#5b35d5">
+  <title>Absensi Siswa • HadirYuk</title>
+  <style>
+    :root {
+      --purple: #5b35d5;
+      --dark: #3d20a8;
+      --pink: #ff4fa3;
+      --ink: #20183b;
+      --muted: #766e8d;
+      --line: #e9e4f6;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: system-ui, Arial, sans-serif;
+      background:
+        radial-gradient(circle at 8% 4%, #ffdbef, transparent 28rem),
+        radial-gradient(circle at 95% 16%, #c9fbf6, transparent 25rem),
+        linear-gradient(135deg, #f7f4ff, #fff8fc 55%, #f1fffd);
+    }
+    .wrap { width: min(720px, calc(100% - 28px)); margin: auto; padding: 28px 0 40px; }
+    header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+    .logo {
+      display: grid; place-items: center; width: 44px; height: 44px;
+      border-radius: 15px; color: white; font-size: 24px;
+      background: linear-gradient(135deg, var(--purple), var(--pink));
+    }
+    .brand { font-size: 1.15rem; font-weight: 900; }
+    .pill { margin-left: auto; font-size: .78rem; font-weight: 800; color: var(--dark); }
+    .hero {
+      border-radius: 25px; padding: 30px; color: white;
+      background: linear-gradient(120deg, #4321b7, #7048e8 58%, #f04d9d);
+    }
+    .eyebrow { font-size: .78rem; font-weight: 800; }
+    h1 { font-size: clamp(2rem, 6vw, 3.3rem); line-height: 1.05; margin: 12px 0; }
+    .hero p { line-height: 1.6; }
+    .stats { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 18px 0; }
+    .stat, .panel { background: white; border: 1px solid #ece7f8; border-radius: 18px; padding: 18px; }
+    .stat span { display: block; color: var(--muted); font-size: .8rem; margin-bottom: 7px; }
+    .stat strong { font-size: 1rem; }
+    .panel h2 { margin: 0 0 7px; }
+    .sub { color: var(--muted); font-size: .9rem; line-height: 1.5; }
+    label.field-label { display: block; font-weight: 800; font-size: .9rem; margin: 18px 0 8px; }
+    input[type="text"] {
+      width: 100%; padding: 14px; border: 1.5px solid var(--line);
+      border-radius: 12px; font: inherit; background: #fcfbff;
+    }
+    .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .choice {
+      display: flex; align-items: center; gap: 9px; padding: 13px;
+      border: 1.5px solid var(--line); border-radius: 12px;
+      cursor: pointer; font-size: .9rem; font-weight: 700;
+    }
+    .choice input { accent-color: var(--purple); }
+    .consent { margin-top: 18px; line-height: 1.5; font-size: .86rem; }
+    .privacy, .hint { color: var(--muted); font-size: .8rem; line-height: 1.5; }
+    .submit {
+      width: 100%; margin-top: 20px; padding: 15px; border: 0;
+      border-radius: 13px; color: white; font: inherit; font-weight: 850;
+      background: linear-gradient(100deg, var(--purple), #8c42df 60%, var(--pink));
+      cursor: pointer;
+    }
+    .submit:disabled { opacity: .65; cursor: wait; }
+    .notice { display: none; margin-top: 14px; padding: 12px; border-radius: 12px; font-size: .88rem; line-height: 1.5; }
+    .notice.show { display: block; }
+    .notice.good { background: #e7fbf3; color: #116b4d; }
+    .notice.bad { background: #fff0f2; color: #a1263e; }
+    footer { text-align: center; color: var(--muted); font-size: .8rem; margin-top: 22px; line-height: 1.6; }
+    @media (max-width: 420px) {
+      .hero { padding: 23px; }
+      .stats { gap: 8px; }
+      .stat { padding: 12px; }
+      .choices { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-<main class="wrap">
-<header>
-<div class="brand">✓ HadirYuk<span style="color:#f04d9d">.</span></div>
-<div class="pill">● ABSENSI SISWA</div>
-</header>
+  <main class="wrap">
+    <header>
+      <div class="logo">✓</div>
+      <div class="brand">HadirYuk<span style="color:#f04d9d">.</span></div>
+      <div class="pill">● ABSENSI SISWA</div>
+    </header>
 
-<section class="hero">
-<div class="eyebrow">HALO, SISWA HEBAT! ✨</div>
-<h1>Absen dulu,<br>baru gas belajar.</h1>
-<p>Isi nama, pilih status kehadiran, lalu kirim absensi. Pastikan nama dan statusmu sudah benar!</p>
-</section>
+    <section class="hero">
+      <div class="eyebrow">Halo, siswa hebat! ✨</div>
+      <h1>Absen dulu,<br>baru gas belajar.</h1>
+      <p>Isi nama, pilih status kehadiran, lalu kirim absensi. Izin lokasi diperlukan untuk verifikasi kehadiran.</p>
+    </section>
 
-<section class="stats">
-<div class="stat"><span>📅 Tanggal hari ini</span><strong id="today">—</strong></div>
-<div class="stat"><span>🕒 Waktu WIB</span><strong id="clock">—</strong></div>
-<div class="stat"><span>🙋 Tercatat di perangkat ini</span><strong id="total">0 siswa</strong></div>
-</section>
+    <section class="stats">
+      <div class="stat">
+        <span>📅 Tanggal hari ini</span>
+        <strong id="today">—</strong>
+      </div>
+      <div class="stat">
+        <span>🕒 Waktu WIB</span>
+        <strong id="clock">—</strong>
+      </div>
+    </section>
 
-<div class="layout">
-<section class="panel">
-<h2>Form absensi 📝</h2>
-<p class="sub">Waktu dicatat otomatis mengikuti jam WIB.</p>
-<form id="attendanceForm">
-<label class="field-label" for="studentName">Nama lengkap</label>
-<input id="studentName" name="studentName" type="text" placeholder="Contoh: Siti Nurhaliza" maxlength="80" required>
+    <section class="panel">
+      <h2>Form absensi 📝</h2>
+      <p class="sub">Lokasi perangkat akan diminta saat mengirim absensi dan dikirim bersama data absensi ke email pengelola.</p>
 
-<label class="field-label">Status kehadiran</label>
-<div class="choices">
-<label class="choice"><input type="radio" name="status" value="Hadir" required checked> ✅ Hadir</label>
-<label class="choice"><input type="radio" name="status" value="Izin"> 📨 Izin</label>
-<label class="choice"><input type="radio" name="status" value="Sakit"> 🤒 Sakit</label>
-<label class="choice"><input type="radio" name="status" value="Alpa"> ❌ Alpa</label>
-</div>
-<p class="hint">Pilih satu status sesuai keadaanmu.</p>
-<button class="submit" type="submit">Kirim Absensi →</button>
-<div id="notice" class="notice" role="status" aria-live="polite"></div>
-</form>
-<p class="privacy">Data daftar terbaru tersimpan di browser perangkat ini.</p>
-</section>
+      <form id="attendanceForm">
+        <label class="field-label" for="studentName">Nama lengkap</label>
+        <input id="studentName" name="studentName" type="text"
+          placeholder="Contoh: Siti Nurhaliza" maxlength="80"
+          autocomplete="name" required>
 
-<section class="panel">
-<div class="list-head"><h2>Kiriman terbaru 📋</h2><span class="count" id="countBadge">0</span></div>
-<p class="sub">Daftar lokal pada perangkat ini.</p>
-<div id="entries" class="entries"><div class="empty">Belum ada absensi.<br>Jadilah yang pertama!</div></div>
-</section>
-</div>
+        <label class="field-label">Status kehadiran</label>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="status" value="Hadir" required checked> ✅ Hadir</label>
+          <label class="choice"><input type="radio" name="status" value="Izin"> 📨 Izin</label>
+          <label class="choice"><input type="radio" name="status" value="Sakit"> 🤒 Sakit</label>
+          <label class="choice"><input type="radio" name="status" value="Alpa"> ❌ Alpa</label>
+        </div>
 
-<footer class="foot">HadirYuk © <span id="year"></span><br>Jam menggunakan zona waktu WIB (UTC+7).</footer>
-</main>
+        <label class="choice consent">
+          <input id="locationConsent" type="checkbox" required>
+          <span>Saya setuju membagikan lokasi perangkat untuk verifikasi absensi. Lokasi akan dikirim ke email pengelola.</span>
+        </label>
 
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-<script>
-const $ = id => document.getElementById(id);
+        <p class="privacy">
+          Izin lokasi wajib untuk mengirim absensi. Jika izin ditolak atau lokasi tidak tersedia,
+          absensi tidak akan dikirim. Lokasi bisa kurang akurat dan tidak membuktikan kehadiran secara mutlak.
+        </p>
 
-// Konfigurasi EmailJS
-const EMAILJS_PUBLIC_KEY = "A607Op6M2VN9lRsLi";
-const EMAILJS_SERVICE_ID = "service_82qgoat";
-const EMAILJS_TEMPLATE_ID = "template_u6zcwpy";
+        <button class="submit" type="submit">Kirim Absensi →</button>
+        <div id="notice" class="notice" role="status" aria-live="polite"></div>
+      </form>
+    </section>
 
-emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
+    <footer>
+      HadirYuk © <span id="year"></span> · Dibuat untuk membantu kelas lebih tertib 💜<br>
+      Jam menggunakan zona waktu WIB (UTC+7).
+    </footer>
+  </main>
 
-const storageKey = "hadiryuk_absensi_v1";
-const dateFormatter = new Intl.DateTimeFormat("id-ID", {
-  timeZone:"Asia/Jakarta",
-  weekday:"long",day:"numeric",month:"long",year:"numeric"
-});
-const timeFormatter = new Intl.DateTimeFormat("id-ID", {
-  timeZone:"Asia/Jakarta",hour:"2-digit",minute:"2-digit",
-  second:"2-digit",hour12:false
-});
-const stampFormatter = new Intl.DateTimeFormat("id-ID", {
-  timeZone:"Asia/Jakarta",day:"2-digit",month:"short",year:"numeric",
-  hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false
-});
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    const $ = (id) => document.getElementById(id);
 
-function updateDateTime(){
-  const now = new Date();
-  $("today").textContent = dateFormatter.format(now);
-  $("clock").textContent = timeFormatter.format(now)+" WIB";
-  $("year").textContent = new Intl.DateTimeFormat("id-ID",{
-    timeZone:"Asia/Jakarta",year:"numeric"
-  }).format(now);
-}
+    // Konfigurasi EmailJS
+    const EMAILJS_PUBLIC_KEY = "A607Op6M2VN9lRsLi";
+    const EMAILJS_SERVICE_ID = "service_82qgoat";
+    const EMAILJS_TEMPLATE_ID = "template_u6zcwpy";
 
-function loadEntries(){
-  try {
-    const data = JSON.parse(localStorage.getItem(storageKey)||"[]");
-    return Array.isArray(data)?data:[];
-  } catch(error) {
-    return [];
-  }
-}
+    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
 
-function renderEntries(){
-  const entries = loadEntries();
-  $("total").textContent = entries.length+" siswa";
-  $("countBadge").textContent = entries.length;
-  const root = $("entries");
-  root.replaceChildren();
-
-  if(!entries.length){
-    const empty = document.createElement("div");
-    empty.className = "empty";
-    empty.textContent = "Belum ada absensi.";
-    root.appendChild(empty);
-    return;
-  }
-
-  entries.slice(0,30).forEach(item=>{
-    const card = document.createElement("article");
-    card.className = "entry";
-
-    const avatar = document.createElement("div");
-    avatar.className = "avatar";
-    avatar.textContent = (item.name||"?").charAt(0).toUpperCase();
-
-    const info = document.createElement("div");
-    const name = document.createElement("strong");
-    name.textContent = item.name;
-
-    const detail = document.createElement("small");
-    detail.textContent = item.status+" · "+item.time+" WIB";
-
-    info.append(name,detail);
-    card.append(avatar,info);
-    root.appendChild(card);
-  });
-}
-
-$("attendanceForm").addEventListener("submit", async event=>{
-  event.preventDefault();
-
-  const name = $("studentName").value.trim().replace(/\s+/g," ");
-  const status = document.querySelector('input[name="status"]:checked')?.value;
-  const notice = $("notice");
-  const button = $("attendanceForm").querySelector('button[type="submit"]');
-
-  if(!name||!status){
-    notice.className = "notice show bad";
-    notice.textContent = "Isi nama dan pilih status kehadiran terlebih dahulu.";
-    return;
-  }
-
-  const now = new Date();
-  const todayKey = new Intl.DateTimeFormat("en-CA",{
-    timeZone:"Asia/Jakarta",year:"numeric",month:"2-digit",day:"2-digit"
-  }).format(now);
-
-  const entries = loadEntries();
-  const duplicate = entries.some(item=>
-    item.dayKey===todayKey &&
-    item.name.toLocaleLowerCase("id-ID")===name.toLocaleLowerCase("id-ID")
-  );
-
-  if(duplicate){
-    notice.className = "notice show bad";
-    notice.textContent = "Nama ini sudah mengirim absensi hari ini di browser ini.";
-    return;
-  }
-
-  const tanggal = dateFormatter.format(now);
-  const waktu = stampFormatter.format(now);
-
-  notice.className = "notice show";
-  notice.textContent = "Sedang mengirim absensi ke email...";
-  button.disabled = true;
-  button.textContent = "Mengirim...";
-
-  try {
-    await emailjs.send(EMAILJS_SERVICE_ID,EMAILJS_TEMPLATE_ID,{
-      nama:name,
-      status:status,
-      tanggal:tanggal,
-      waktu:waktu,
-      title:"Absensi Siswa Baru - "+tanggal,
-      name:name
+    const dateFormatter = new Intl.DateTimeFormat("id-ID", {
+      timeZone: "Asia/Jakarta",
+      weekday: "long", day: "numeric", month: "long", year: "numeric"
     });
-  } catch(error) {
-    console.error("EmailJS error:",error);
-    notice.className = "notice show bad";
-    notice.textContent = "Email gagal dikirim. Periksa Service ID, Template ID, Public Key, dan pengaturan template EmailJS.";
-    button.disabled = false;
-    button.textContent = "Kirim Absensi →";
-    return;
-  }
+    const timeFormatter = new Intl.DateTimeFormat("id-ID", {
+      timeZone: "Asia/Jakarta",
+      hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false
+    });
+    const stampFormatter = new Intl.DateTimeFormat("id-ID", {
+      timeZone: "Asia/Jakarta",
+      day: "2-digit", month: "short", year: "numeric",
+      hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false
+    });
 
-  entries.unshift({name,status,dayKey:todayKey,time:waktu});
-  try {
-    localStorage.setItem(storageKey,JSON.stringify(entries));
-  } catch(error) {
-    console.error("Penyimpanan lokal gagal:",error);
-  }
+    function updateDateTime() {
+      const now = new Date();
+      $("today").textContent = dateFormatter.format(now);
+      $("clock").textContent = timeFormatter.format(now) + " WIB";
+      $("year").textContent = new Intl.DateTimeFormat("id-ID", {
+        timeZone: "Asia/Jakarta", year: "numeric"
+      }).format(now);
+    }
 
-  renderEntries();
-  notice.className = "notice show good";
-  notice.textContent = "Absensi berhasil dikirim ke email pada "+waktu+" WIB. Terima kasih, "+name+"!";
-  $("studentName").value = "";
-  button.disabled = false;
-  button.textContent = "Kirim Absensi →";
-});
+    function getDeviceLocation() {
+      return new Promise((resolve, reject) => {
+        if (!navigator.geolocation) {
+          reject(new Error("Browser ini tidak mendukung lokasi."));
+          return;
+        }
 
-updateDateTime();
-renderEntries();
-setInterval(updateDateTime,1000);
-</script>
+        navigator.geolocation.getCurrentPosition(
+          (position) => resolve(position.coords),
+          (error) => {
+            let message = "Lokasi tidak tersedia. Aktifkan GPS/lokasi lalu coba lagi.";
+            if (error.code === 1) {
+              message = "Izin lokasi ditolak. Izinkan lokasi melalui pengaturan situs browser untuk mengirim absensi.";
+            } else if (error.code === 3) {
+              message = "Permintaan lokasi terlalu lama. Pastikan GPS aktif lalu coba lagi.";
+            }
+            reject(new Error(message));
+          },
+          { enableHighAccuracy: true, timeout: 20000, maximumAge: 0 }
+        );
+      });
+    }
+
+    $("attendanceForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const name = $("studentName").value.trim().replace(/\s+/g, " ");
+      const status = document.querySelector('input[name="status"]:checked')?.value;
+      const notice = $("notice");
+      const submitButton = $("attendanceForm").querySelector('button[type="submit"]');
+
+      if (!name || !status || !$("locationConsent").checked) {
+        notice.className = "notice show bad";
+        notice.textContent = "Isi nama, pilih status, dan setujui penggunaan lokasi terlebih dahulu.";
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Meminta lokasi...";
+      notice.className = "notice show";
+      notice.textContent = "Izinkan akses lokasi saat browser meminta izin. Absensi tidak dikirim tanpa lokasi.";
+
+      let coords;
+      try {
+        coords = await getDeviceLocation();
+      } catch (error) {
+        notice.className = "notice show bad";
+        notice.textContent = error.message;
+        submitButton.disabled = false;
+        submitButton.textContent = "Kirim Absensi →";
+        return;
+      }
+
+      const now = new Date();
+      const formattedDate = dateFormatter.format(now);
+      const formattedTime = stampFormatter.format(now);
+      const mapsLink = `https://www.google.com/maps?q=${coords.latitude},${coords.longitude}`;
+
+      notice.textContent = "Mengirim absensi dan lokasi ke email...";
+
+      try {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+          nama: name,
+          status: status,
+          tanggal: formattedDate,
+          waktu: formattedTime,
+          lokasi_status: "Lokasi dibagikan dengan persetujuan pengguna",
+          latitude: coords.latitude,
+          longitude: coords.longitude,
+          akurasi_lokasi: Math.round(coords.accuracy) + " meter",
+          link_peta: mapsLink,
+          title: "Absensi Siswa - " + name + " - " + formattedDate,
+          name: name
+        });
+      } catch (error) {
+        notice.className = "notice show bad";
+        notice.textContent = "Email belum berhasil dikirim. Periksa koneksi internet dan variabel template EmailJS.";
+        submitButton.disabled = false;
+        submitButton.textContent = "Kirim Absensi →";
+        return;
+      }
+
+      notice.className = "notice show good";
+      notice.textContent = "Absensi berhasil dikirim ke email pada " + formattedTime + " WIB. Terima kasih, " + name + "!";
+      $("studentName").value = "";
+      $("locationConsent").checked = false;
+      submitButton.disabled = false;
+      submitButton.textContent = "Kirim Absensi →";
+    });
+
+    updateDateTime();
+    setInterval(updateDateTime, 1000);
+  </script>
 </body>
-                                    </html>
-                                    
+            </html>
+  
